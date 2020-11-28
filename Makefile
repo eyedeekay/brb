@@ -1,4 +1,4 @@
-VERSION=0.0.03
+VERSION=0.0.04
 
 USER_GH=eyedeekay
 packagename=brb
@@ -28,7 +28,7 @@ windows-runner: fmt
 	CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename).exe
 	2goarray BRB main < brb.exe > installer/brb.go
 
-windows:
+windows: windows-runner
 	CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-installer.exe ./installer
 	#CC=i686-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows GOARCG=i386 go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-32.exe
 
