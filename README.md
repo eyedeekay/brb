@@ -23,7 +23,7 @@ to make it suitable for use as a user-friendly I2P IRC client.
   installed, lorca will prompt you to install it. Lorca configures Chromium
   to minimize Google telemetry, and requests away from the Dispatch client
   will still be proxied to the I2P network. This is also **not recommended**
-  for use as a general I2P browser.
+  for use as a general I2P browser. <<
  3. **An I2P Diagnostic View:** using the [I2PControl API](https://geti2p.net/en/docs/api/i2pcontrol)
   we connect to I2P to gather information about it's readiness in another
   webview.
@@ -38,3 +38,10 @@ This means that it can support as many IRC networks as you want to connect to.
 With i2pd, the SAM API is already enabled. With Java I2P, you must enable it
 on the [Config Clients](http://localhost:7657/configclients) page.
 
+
+
+  >> `If you do not want to use either the WebView or Chromium to wrap the
+  user-interface, you can instead use any web browser and direct it to
+  localhost:7669. There is a container tab for this in
+  [I2P in Private Browsing](https://github.com/eyedeekay/I2P-in-Private-Browsing-Mode-Firefox).
+  This should be a reasonable baseline for non-sensitive I2P browsing.`
