@@ -6,7 +6,7 @@ require (
 	github.com/DanielOaks/girc-go v0.0.0-20201118022549-7209d10d54a8 // indirect
 	github.com/blevesearch/bleve v1.0.13 // indirect
 	github.com/eyedeekay/goSam v0.32.29 // indirect
-	github.com/eyedeekay/i2p-traymenu v0.0.0-20201128032531-e55424063d8b
+	github.com/eyedeekay/i2p-traymenu v0.0.0-20201128055612-b9f0511665f5
 	github.com/eyedeekay/sam3 v0.32.32 // indirect
 	github.com/eyedeekay/toopie.html v0.0.0-20200913160847-829743334069
 	github.com/getlantern/ops v0.0.0-20200403153110-8476b16edcd6 // indirect
