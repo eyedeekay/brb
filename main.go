@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/eyedeekay/brb/icon"
-	"github.com/eyedeekay/i2p-traymenu/irc"
+	"github.com/eyedeekay/brb/irc"
 	"github.com/eyedeekay/toopie.html/import"
 	"github.com/getlantern/systray"
 	"github.com/janosgyerik/portping"

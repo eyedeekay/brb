@@ -13,17 +13,17 @@ import (
 func Setup(dir string) error {
 	if runtime.GOOS == "windows" {
 		if runtime.GOARCH == "386" {
-			if err := ioutil.WriteFile(filepath.Join(dir, "webview.dll"), webview32.Webview, 0755); err != nil {
+			if err := ConditionalWrite(filepath.Join(dir, "webview.dll"), webview32.Webview); err != nil {
 				return err
 			}
-			if err := ioutil.WriteFile(filepath.Join(dir, "WebView2Loader.dll"), webview32.Webview2Loader, 0755); err != nil {
+			if err := ConditionalWrite(filepath.Join(dir, "WebView2Loader.dll"), webview32.Webview2Loader); err != nil {
 				return err
 			}
 		} else if runtime.GOARCH == "amd64" {
-			if err := ioutil.WriteFile(filepath.Join(dir, "webview.dll"), webview64.Webview, 0755); err != nil {
+			if err := ConditionalWrite(filepath.Join(dir, "webview.dll"), webview64.Webview); err != nil {
 				return err
 			}
-			if err := ioutil.WriteFile(filepath.Join(dir, "WebView2Loader.dll"), webview64.Webview2Loader, 0755); err != nil {
+			if err := ConditionalWrite(filepath.Join(dir, "WebView2Loader.dll"), webview64.Webview2Loader); err != nil {
 				return err
 			}
 		} else {
@@ -31,4 +31,14 @@ func Setup(dir string) error {
 		}
 	}
 	return nil
+}
+
+func ConditionalWrite(path string, file []byte) error {
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		if err := ioutil.WriteFile(path, file, 0755); err != nil {
+			return err
+		}
+	} else {
+		return nil
+	}
 }
