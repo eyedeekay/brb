@@ -10,7 +10,7 @@ was the most logical. This adds a few very simple things to Dispatch
 to make it suitable for use as a user-friendly I2P IRC client.
 
  1. **A taskbar icon:** using the [getlantern/systray](https://github.com/getlantern/systray)
-  library and an accompanying menu, which can be
+  library and an accompanying menu, which can be used to launch the IRC client interface.
  2. **A Webview:** using the [webview/webview](https://github.com/webview/webview)
   library. It's configured to proxy all traffic to I2P via the default
   HTTP proxy, *except* for traffic which is destined for the dispatch
