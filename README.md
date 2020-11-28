@@ -17,7 +17,13 @@ to make it suitable for use as a user-friendly I2P IRC client.
   IRC client. This makes it capable of browsing I2P sites. It is
   **not reccommended** that you use this feature for general I2P browsing,
   but it should be ok for opening links from parties **who you trust** to
-  give you the link.
+  give you the link. **On Windows** the webUI is provided by
+  [zserge/lorca](https://github.com/zserge/lorca) due to bugs Webview on
+  Windows. This requires Chrome or Chromium to be installed. If it is not
+  installed, lorca will prompt you to install it. Lorca configures Chromium
+  to minimize Google telemetry, and requests away from the Dispatch client
+  will still be proxied to the I2P network. This is also **not recommended**
+  for use as a general I2P browser.
  3. **An I2P Diagnostic View:** using the [I2PControl API](https://geti2p.net/en/docs/api/i2pcontrol)
   we connect to I2P to gather information about it's readiness in another
   webview.

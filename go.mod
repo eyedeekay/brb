@@ -38,6 +38,7 @@ require (
 	github.com/tinylib/msgp v1.1.5 // indirect
 	github.com/webview/webview v0.0.0-20200724072439-e0c01595b361
 	github.com/willf/bitset v1.1.11 // indirect
+	github.com/zserge/lorca v0.1.9
 	go.uber.org/multierr v1.6.0 // indirect
 	go.uber.org/zap v1.16.0 // indirect
 	golang.org/x/crypto v0.0.0-20201124201722-c8d3bf9c5392

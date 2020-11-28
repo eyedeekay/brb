@@ -4,17 +4,20 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"net"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"time"
 
 	"github.com/eyedeekay/brb/icon"
 	"github.com/eyedeekay/brb/irc"
-	"github.com/eyedeekay/toopie.html/import"
+	"github.com/eyedeekay/toopie.html/lib"
 	"github.com/getlantern/systray"
 	"github.com/janosgyerik/portping"
 	"github.com/webview/webview"
+	"github.com/zserge/lorca"
 )
 
 var usage = `Blue Rubber Band
@@ -31,17 +34,20 @@ An easy to use I2P IRC client.
 var home, _ = os.UserHomeDir()
 
 var (
-	host   = flag.String("host", "localhost", "Host of the i2pcontrol and SAM interfaces")
-	dir    = flag.String("dir", filepath.Join(home, "i2p/opt/native-traymenu"), "Path to the configuration directory")
-	shelp  = flag.Bool("h", false, "Show the help message")
-	lhelp  = flag.Bool("help", false, "Show the help message")
-	debug  = flag.Bool("d", true, "Debug mode")
-	sam    = flag.String("sam", "7656", "Port of the SAMv3 interface, host must match i2pcontrol")
-	client = flag.Bool("client", false, "Start the chat client")
-	proxy  = flag.String("p", "127.0.0.1:4444", "I2P HTTP proxy to use when following links.")
+	host         = flag.String("host", "localhost", "Host of the i2pcontrol and SAM interfaces")
+	dir          = flag.String("dir", filepath.Join(home, "i2p/opt/native-traymenu"), "Path to the configuration directory")
+	shelp        = flag.Bool("h", false, "Show the help message")
+	lhelp        = flag.Bool("help", false, "Show the help message")
+	debug        = flag.Bool("d", true, "Debug mode")
+	sam          = flag.String("sam", "7656", "Port of the SAMv3 interface, host must match i2pcontrol")
+	client       = flag.Bool("client", false, "Start the chat client")
+	proxy        = flag.String("p", "127.0.0.1:4444", "I2P HTTP proxy to use when following links.")
+	forcewebview = flag.Bool("webview", false, "(Windows-Only)Force the use of a WebView window instead of a Lorca window")
+	monitor      = flag.Bool("toopie", false, "Launch toopie.html to monitor I2P router health.")
 	//	local  = flag.Bool("no-i2prc", false, "Connect to locally-hosted IRC server, not I2PRC.")
 	plt   = false
 	local = &plt
+	ln    net.Listener
 
 //	block    = flag.Bool("block", false, "Block the terminal until the router is completely shut down")
 )
@@ -56,6 +62,13 @@ func main() {
 	if err := portping.Ping("127.0.0.1", "7669", time.Second); err == nil {
 		*client = true
 	}
+	if !*monitor {
+		if err := portping.Ping("127.0.0.1", "7667", time.Second); err != nil {
+			if err := portping.Ping("127.0.0.1", "7668", time.Second); err != nil {
+				ln = toopie.Listen("7667", 7668)
+			}
+		}
+	}
 	if *client {
 		os.Setenv("http_proxy", "http://"+*proxy)
 		os.Setenv("https_proxy", "http://"+*proxy)
@@ -69,24 +82,80 @@ func main() {
 		os.Setenv("NO_PROXY", "localhost:7669,127.0.0.1:7669")
 
 		if *local {
+			if runtime.GOOS != "windows" {
+				var w webview.WebView
+				w = webview.New(*debug)
+				defer w.Destroy()
+				w.SetTitle("brb")
+				w.SetSize(800, 600, webview.HintNone)
+				log.Println("Reaching self-hosted IRC server", trayirc.OutputAutoLink(*dir, "iirc"))
+				w.Navigate(trayirc.OutputAutoLink(*dir, "iirc"))
+				w.Run()
+			} else if *forcewebview {
+				var w webview.WebView
+				w = webview.New(*debug)
+				defer w.Destroy()
+				w.SetTitle("brb")
+				w.SetSize(800, 600, webview.HintNone)
+				w.Navigate(trayirc.OutputAutoLink(*dir, "iirc"))
+				w.Run()
+			} else {
+				ui, err := lorca.New(trayirc.OutputAutoLink(*dir, "iirc"), "", 480, 320)
+				if err != nil {
+					log.Fatal(err)
+				}
+				defer ui.Close()
+				// Wait until UI window is closed
+				<-ui.Done()
+			}
+		} else {
+			if runtime.GOOS != "windows" {
+				var w webview.WebView
+				w = webview.New(*debug)
+				defer w.Destroy()
+				w.SetTitle("brb")
+				w.SetSize(800, 600, webview.HintNone)
+				w.Navigate("http://127.0.0.1:7669/connect")
+				w.Run()
+			} else if *forcewebview {
+				var w webview.WebView
+				w = webview.New(*debug)
+				defer w.Destroy()
+				w.SetTitle("brb")
+				w.SetSize(800, 600, webview.HintNone)
+				w.Navigate("http://127.0.0.1:7669/connect")
+				w.Run()
+			} else {
+				ui, err := lorca.New("http://127.0.0.1:7669/connect", "", 800, 600)
+				if err != nil {
+					log.Fatal(err)
+				}
+				defer ui.Close()
+				// Wait until UI window is closed
+				<-ui.Done()
+			}
+		}
+
+	} else if *monitor {
+		if runtime.GOOS != "windows" {
 			var w webview.WebView
 			w = webview.New(*debug)
 			defer w.Destroy()
 			w.SetTitle("brb")
 			w.SetSize(800, 600, webview.HintNone)
-			log.Println("Reaching self-hosted IRC server", trayirc.OutputAutoLink(*dir, "iirc"))
-			w.Navigate(trayirc.OutputAutoLink(*dir, "iirc"))
+			w.Navigate(fmt.Sprintf("http://%s", "127.0.0.1:7667"))
 			w.Run()
 		} else {
-			var w webview.WebView
-			w = webview.New(*debug)
-			defer w.Destroy()
-			w.SetTitle("brb")
-			w.SetSize(800, 600, webview.HintNone)
-			w.Navigate("http://127.0.0.1:7669/connect")
-			w.Run()
+			ui, err := lorca.New(fmt.Sprintf("http://%s", "127.0.0.1:7667"), "", 800, 600)
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer ui.Close()
+			// Wait until UI window is closed
+			<-ui.Done()
 		}
 	} else {
+
 		onExit := func() {
 			log.Println("Exiting now.")
 			defer trayirc.Close(*dir, "ircd.yml")
@@ -106,6 +175,7 @@ func onReady() {
 	mStatOrig := systray.AddMenuItem("I2P Router Stats", "View I2P Router Console Statistics")
 	systray.AddSeparator()
 	mQuitOrig := systray.AddMenuItem("Close Tray", "Close the tray app, but don't shutdown the router")
+
 	go func() {
 		<-mQuitOrig.ClickedCh
 		systray.Quit()
@@ -135,8 +205,11 @@ func onReady() {
 
 			go func() {
 				<-mStatOrig.ClickedCh
-				log.Println("Launching toopie.html")
-				go toopiexec.Run()
+				ex, err := os.Executable()
+				if err != nil {
+					panic(err)
+				}
+				exec.Command(ex, "-toopie").Run()
 			}()
 
 			time.Sleep(time.Second)

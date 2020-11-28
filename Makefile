@@ -3,8 +3,8 @@ VERSION=0.0.04
 USER_GH=eyedeekay
 packagename=brb
 
-GO_COMPILER_OPTS = -a -tags "netgo" -ldflags '-w'
-WIN_GO_COMPILER_OPTS = -a -tags "netgo windows" -ldflags '-H=windowsgui'
+GO_COMPILER_OPTS = -a -tags "netgo osusergo" -ldflags '-w'
+WIN_GO_COMPILER_OPTS = -a -tags "netgo osusergo windows" -ldflags '-H=windowsgui'
 
 echo:
 	@echo "type make version to do release $(VERSION)"
