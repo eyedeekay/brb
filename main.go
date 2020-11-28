@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/eyedeekay/i2p-traymenu/icon"
+	"github.com/eyedeekay/brb/icon"
 	"github.com/eyedeekay/i2p-traymenu/irc"
 	"github.com/eyedeekay/toopie.html/import"
 	"github.com/getlantern/systray"
@@ -22,7 +22,7 @@ var usage = `Blue Rubber Band
 
 used to bind up dispatch.
 
-
+An easy to use I2P IRC client.
 
 `
 
