@@ -8,7 +8,7 @@ require (
 	github.com/blevesearch/bleve v1.0.13 // indirect
 	github.com/caddyserver/certmagic v0.12.0 // indirect
 	github.com/eyedeekay/sam3 v0.32.32 // indirect
-	github.com/eyedeekay/toopie.html v0.0.0-20200913160847-829743334069
+	github.com/eyedeekay/toopie.html v0.0.0-20201128175214-18d6420924ac
 	github.com/getlantern/ops v0.0.0-20200403153110-8476b16edcd6 // indirect
 	github.com/getlantern/systray v1.1.0
 	github.com/golang/snappy v0.0.2 // indirect

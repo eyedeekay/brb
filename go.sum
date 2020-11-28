@@ -180,6 +180,8 @@ github.com/eyedeekay/sam3 v0.32.32 h1:9Ea1Ere5O8Clx8zYxKnvhrWy7R96Q4FvxlPskYf8VW
 github.com/eyedeekay/sam3 v0.32.32/go.mod h1:qRA9KIIVxbrHlkj+ZB+OoxFGFgdKeGp1vSgPw26eOVU=
 github.com/eyedeekay/toopie.html v0.0.0-20200913160847-829743334069 h1:CDYI0Z+BcuKWS598AX+cR1VzrTDo62EAe6WHg3pUzkk=
 github.com/eyedeekay/toopie.html v0.0.0-20200913160847-829743334069/go.mod h1:eRVDXcBTXKTkGAVD6LC7279iK8IHkd8xpx5qN6eysQ4=
+github.com/eyedeekay/toopie.html v0.0.0-20201128175214-18d6420924ac h1:3JyzgFNQO0/RpS4JI5+JVvrRk6ux1kRo2u42DRDhKZI=
+github.com/eyedeekay/toopie.html v0.0.0-20201128175214-18d6420924ac/go.mod h1:w6SQxKIGQ8ZRORwwbfezQr0JhojOuzcZ33VYfqBkhEM=
 github.com/facebookgo/ensure v0.0.0-20160127193407-b4ab57deab51 h1:0JZ+dUmQeA8IIVUMzysrX4/AKuQwWhV2dYQuPZdvdSQ=
 github.com/facebookgo/ensure v0.0.0-20160127193407-b4ab57deab51/go.mod h1:Yg+htXGokKKdzcwhuNDwVvN+uBxDGXJ7G/VN1d8fa64=
 github.com/facebookgo/stack v0.0.0-20160209184415-751773369052 h1:JWuenKqqX8nojtoVVWjGfOF9635RETekkoH6Cc9SX0A=
