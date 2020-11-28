@@ -1,4 +1,4 @@
-VERSION=0.0.02
+VERSION=0.0.03
 
 USER_GH=eyedeekay
 packagename=brb

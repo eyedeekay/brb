@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/eyedeekay/brb/icon"
+	"github.com/eyedeekay/brb/webview"
 	"github.com/eyedeekay/i2p-traymenu/irc"
 	"github.com/eyedeekay/toopie.html/import"
 	"github.com/getlantern/systray"
@@ -57,7 +58,12 @@ func main() {
 		*client = true
 	}
 	if *client {
-
+	  ex, err := os.Executable()
+	  if err != nil {
+		  panic(err)
+	  }
+	  place := filepath.Dir(ex)
+	  webviewhelper.Setup(place)
 		os.Setenv("http_proxy", "http://"+*proxy)
 		os.Setenv("https_proxy", "http://"+*proxy)
 		os.Setenv("ftp_proxy", "http://"+*proxy)
