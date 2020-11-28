@@ -29,5 +29,6 @@ Enable the SAM API!
 
 brb uses the SAM API to set up it's connection to IRC networks inside of I2P.
 This means that it can support as many IRC networks as you want to connect to.
-With a
+With i2pd, the SAM API is already enabled. With Java I2P, you must enable it
+on the [Config Clients](http://localhost:7657/configclients) page.
 
