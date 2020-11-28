@@ -58,12 +58,12 @@ func main() {
 		*client = true
 	}
 	if *client {
-	  ex, err := os.Executable()
-	  if err != nil {
-		  panic(err)
-	  }
-	  place := filepath.Dir(ex)
-	  webviewhelper.Setup(place)
+		ex, err := os.Executable()
+		if err != nil {
+			panic(err)
+		}
+		place := filepath.Dir(ex)
+		webviewhelper.Setup(place)
 		os.Setenv("http_proxy", "http://"+*proxy)
 		os.Setenv("https_proxy", "http://"+*proxy)
 		os.Setenv("ftp_proxy", "http://"+*proxy)
