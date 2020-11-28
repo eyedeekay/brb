@@ -1,8 +1,8 @@
 package main
 
 import (
-	"io/ioutil"
 	"os"
+	"os/exec"
 	"path/filepath"
 
 	"github.com/eyedeekay/brb/webview"

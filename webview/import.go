@@ -3,6 +3,7 @@ package webviewhelper
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"path/filepath"
 	"runtime"
 
@@ -38,7 +39,6 @@ func ConditionalWrite(path string, file []byte) error {
 		if err := ioutil.WriteFile(path, file, 0755); err != nil {
 			return err
 		}
-	} else {
-		return nil
 	}
+	return nil
 }

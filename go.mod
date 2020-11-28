@@ -1,6 +1,6 @@
 module github.com/eyedeekay/brb
 
-go 1.15
+go 1.13
 
 require (
 	github.com/DanielOaks/girc-go v0.0.0-20201118022549-7209d10d54a8 // indirect

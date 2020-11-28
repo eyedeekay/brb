@@ -28,7 +28,8 @@ windows-runner: fmt
 	CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename).exe
 	2goarray BRB main < brb.exe > installer/brb.go
 
-windows: windows-runner
+windows: 
+  #windows-runner
 	CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-installer.exe ./installer
 	#CC=i686-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows GOARCG=i386 go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-32.exe
 
@@ -59,5 +60,5 @@ upload: upload-windows upload-darwin upload-linux
 release: version upload
 
 fmt:
-	gofmt -w -s main.go
+	gofmt -w -s main.go installer/main.go webview/import.go irc/*.go
 

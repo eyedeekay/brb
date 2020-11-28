@@ -64,7 +64,7 @@ func OutputAutoLink(dir, configfile string) string {
 }
 
 func OutputServerConfigFile(dir, configfile string) (string, error) {
-  os.MkdirAll(dir, 0755)
+	os.MkdirAll(dir, 0755)
 	if _, err := os.Stat(filepath.Join(dir, configfile)); err == nil {
 		return "", err
 	} else if !os.IsNotExist(err) {
@@ -133,7 +133,7 @@ func OutputServerConfigFile(dir, configfile string) (string, error) {
 }
 
 func IRCServerMain(version, debug bool, dir, configfile string) {
-  os.MkdirAll(dir, 0755)
+	os.MkdirAll(dir, 0755)
 	if version {
 		fmt.Printf(irc.FullVersion())
 		os.Exit(0)

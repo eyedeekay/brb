@@ -131,7 +131,7 @@ func initConfig(configPath string, overwrite bool) error {
 }
 
 func IRC(confdir string) {
-  os.MkdirAll(confdir, 0755)
+	os.MkdirAll(confdir, 0755)
 	if _, err := os.Stat(filepath.Join(confdir, "irc.running")); !os.IsNotExist(err) {
 		return
 	}
