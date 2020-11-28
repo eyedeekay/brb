@@ -62,13 +62,6 @@ func main() {
 	if err := portping.Ping("127.0.0.1", "7669", time.Second); err == nil {
 		*client = true
 	}
-	if !*monitor {
-		if err := portping.Ping("127.0.0.1", "7667", time.Second); err != nil {
-			if err := portping.Ping("127.0.0.1", "7668", time.Second); err != nil {
-				ln = toopie.Listen("7667", 7668)
-			}
-		}
-	}
 	if *client {
 		os.Setenv("http_proxy", "http://"+*proxy)
 		os.Setenv("https_proxy", "http://"+*proxy)
@@ -155,6 +148,13 @@ func main() {
 			<-ui.Done()
 		}
 	} else {
+		if !*monitor {
+			if err := portping.Ping("127.0.0.1", "7667", time.Second); err != nil {
+				if err := portping.Ping("127.0.0.1", "7668", time.Second); err != nil {
+					ln = toopie.Listen("7667", 7668)
+				}
+			}
+		}
 
 		onExit := func() {
 			log.Println("Exiting now.")
