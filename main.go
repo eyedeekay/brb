@@ -7,6 +7,7 @@ import (
 	"net"
 	"os"
 	"os/exec"
+	"os/signal"
 	"path/filepath"
 	"runtime"
 	"time"
@@ -62,6 +63,15 @@ func main() {
 	if err := portping.Ping("127.0.0.1", "7669", time.Second); err == nil {
 		*client = true
 	}
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	go func() {
+		for sig := range c {
+			log.Println(sig)
+			trayirc.Close(*dir, "ircd.yml")
+			os.Exit(0)
+		}
+	}()
 	if *client {
 		os.Setenv("http_proxy", "http://"+*proxy)
 		os.Setenv("https_proxy", "http://"+*proxy)
