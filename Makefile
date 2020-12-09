@@ -1,4 +1,4 @@
-VERSION=0.0.06
+VERSION=0.0.07
 
 USER_GH=eyedeekay
 packagename=brb
@@ -8,6 +8,9 @@ WIN_GO_COMPILER_OPTS = -a -tags "netgo osusergo windows" -ldflags '-H=windowsgui
 
 echo:
 	@echo "type make version to do release $(VERSION)"
+
+run:
+	go build && ./brb
 
 version:
 	gothub release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION) -d "version $(VERSION)"

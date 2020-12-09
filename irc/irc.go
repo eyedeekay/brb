@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	//"strings"
 	"path/filepath"
 
 	"github.com/khlieng/dispatch/config"
@@ -30,7 +31,7 @@ verify_certificates = true
 [defaults]
 name = "i2prc"
 host = "irc.echelon.i2p"
-port = 6697
+port = 6667
 channels = [
   "#i2p",
   "#i2p-dev",
@@ -87,16 +88,16 @@ secret = ""
 [dcc]
 # Receive files through DCC, the user gets to choose if they want to accept the file,
 # the file download then gets proxied to the user
-enabled = true
+enabled = false
 
 [dcc.autoget]
 # Instead of proxying the file download directly to the user, dispatch automatically downloads
 # DCC files and sends a download link to the user once its done
-enabled = false
+enabled = true
 # Delete the file after the user has downloaded it once
 delete = true
 # Delete the file after a certain time period of inactivity, not implemented yet
-delete_after = "30m"
+delete_after = "90m"
 
 [proxy]
 # Dispatch will make all outgoing connections through the specified proxy when enabled
@@ -122,10 +123,22 @@ preload = false
 func initConfig(configPath string, overwrite bool) error {
 	if _, err := os.Stat(configPath); overwrite || os.IsNotExist(err) {
 		log.Println("Writing default config to", configPath)
-		err := ioutil.WriteFile(configPath, []byte(configfile), 0600)
+		err := ioutil.WriteFile(configPath, []byte(configfile), 0644)
 		if err != nil {
 			return err
 		}
+	} else {
+		/*		b, err := ioutil.ReadFile(configPath)
+				if err != nil {
+					return err
+				}
+				configfile := string(b)
+				configfile = strings.Replace(configfile, "protocol = \"i2p\"", "protocol = \"socks5\"", -1)
+				configfile = strings.Replace(configfile, "port = 7656", "port = 7675", -1)
+				err = ioutil.WriteFile(configPath, []byte(configfile), 0644)
+				if err != nil {
+					return err
+				}*/
 	}
 	return nil
 }

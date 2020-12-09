@@ -14,7 +14,9 @@ import (
 
 	"github.com/eyedeekay/brb/icon"
 	"github.com/eyedeekay/brb/irc"
+	"github.com/eyedeekay/goSam"
 	"github.com/eyedeekay/toopie.html/lib"
+	"github.com/getlantern/go-socks5"
 	"github.com/getlantern/systray"
 	"github.com/janosgyerik/portping"
 	"github.com/webview/webview"
@@ -45,6 +47,7 @@ var (
 	proxy        = flag.String("p", "127.0.0.1:4444", "I2P HTTP proxy to use when following links.")
 	forcewebview = flag.Bool("webview", false, "(Windows-Only)Force the use of a WebView window instead of a Lorca window")
 	monitor      = flag.Bool("toopie", false, "Launch toopie.html to monitor I2P router health.")
+	ircserver    = flag.Bool("eris", true, "Launch embedded Eris IRC Server instance on an I2P service.")
 	//	local  = flag.Bool("no-i2prc", false, "Connect to locally-hosted IRC server, not I2PRC.")
 	plt   = false
 	local = &plt
@@ -53,12 +56,44 @@ var (
 //	block    = flag.Bool("block", false, "Block the terminal until the router is completely shut down")
 )
 
+var (
+	socksaddr = flag.String("socks", "", "Start an embedded I2P SOCKS Proxy on a local port")
+)
+
+func Socks() {
+	samsocks, err := goSam.NewClient("127.0.0.1:" + *sam)
+	if err != nil {
+		panic(err)
+	}
+	log.Println("Client Created")
+
+	// create a transport that uses SAM to dial TCP Connections
+	conf := &socks5.Config{
+		Dial:     samsocks.DialContext,
+		Resolver: samsocks,
+	}
+	server, err := socks5.New(conf)
+	if err != nil {
+		panic(err)
+	}
+
+	// Create SOCKS5 proxy on localhost port 8000
+	if err := server.ListenAndServe("tcp", "127.0.0.1:"+*socksaddr); err != nil {
+		panic(err)
+	}
+}
+
 func main() {
 	flag.Parse()
 	if *shelp || *lhelp {
 		fmt.Printf(usage)
 		flag.PrintDefaults()
 		return
+	}
+	if *socksaddr != "" {
+		if err := portping.Ping("127.0.0.1", *socksaddr, time.Second); err != nil {
+			go Socks()
+		}
 	}
 	if err := portping.Ping("127.0.0.1", "7669", time.Second); err == nil {
 		*client = true
@@ -170,6 +205,9 @@ func main() {
 			log.Println("Exiting now.")
 			defer trayirc.Close(*dir, "ircd.yml")
 		}
+		if *ircserver {
+			go trayirc.IRCServerMain(false, *debug, *dir, "ircd.yml")
+		}
 		systray.Run(onReady, onExit)
 	}
 }
@@ -182,6 +220,13 @@ func onReady() {
 	mIRC := systray.AddMenuItem("IRC Chat", "Talk to others on I2P IRC")
 	mSelfIRC := systray.AddMenuItem("Local Group Chat", "Connect to private IRC server")
 	mSelfIRC.Hide()
+	ircurl := trayirc.OutputAutoLink(*dir, "iirc")
+	log.Println("Checking whether to un-hide embedded IRC server from menu", ircurl)
+	if ircurl != "" {
+		if *ircserver == true {
+			mSelfIRC.Show()
+		}
+	}
 	mStatOrig := systray.AddMenuItem("I2P Router Stats", "View I2P Router Console Statistics")
 	systray.AddSeparator()
 	mQuitOrig := systray.AddMenuItem("Close Tray", "Close the tray app, but don't shutdown the router")
@@ -225,6 +270,5 @@ func onReady() {
 			time.Sleep(time.Second)
 		}
 	}()
-
 	trayirc.IRC(*dir)
 }
