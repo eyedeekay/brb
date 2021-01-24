@@ -65,3 +65,6 @@ release: version upload
 fmt:
 	gofmt -w -s main.go installer/main.go webview/import.go irc/*.go
 
+droidjar:
+	gomobile bind -o brb.aar ./irc
+
