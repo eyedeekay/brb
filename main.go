@@ -41,7 +41,7 @@ var (
 	dir          = flag.String("dir", filepath.Join(home, "i2p/opt/native-traymenu"), "Path to the configuration directory")
 	shelp        = flag.Bool("h", false, "Show the help message")
 	lhelp        = flag.Bool("help", false, "Show the help message")
-	debug        = flag.Bool("d", true, "Debug mode")
+	debug        = flag.Bool("d", false, "Debug mode")
 	sam          = flag.String("sam", "7656", "Port of the SAMv3 interface, host must match i2pcontrol")
 	client       = flag.Bool("client", false, "Start the chat client")
 	proxy        = flag.String("p", "127.0.0.1:4444", "I2P HTTP proxy to use when following links.")
@@ -193,10 +193,10 @@ func main() {
 			<-ui.Done()
 		}
 	} else {
-		if !*monitor {
+		if *monitor {
 			if err := portping.Ping("127.0.0.1", "7667", time.Second); err != nil {
-				if err := portping.Ping("127.0.0.1", "7668", time.Second); err != nil {
-					ln = toopie.Listen("7667", 7668)
+				if err := portping.Ping("127.0.0.1", "7670", time.Second); err != nil {
+					ln = toopie.Listen("7667", 7670)
 				}
 			}
 		}
@@ -206,7 +206,10 @@ func main() {
 			defer trayirc.Close(*dir, "ircd.yml")
 		}
 		if *ircserver {
-			go trayirc.IRCServerMain(false, *debug, *dir, "ircd.yml")
+			if err := portping.Ping("127.0.0.1", "6667", time.Second); err != nil {
+				go trayirc.IRCServerMain(false, *debug, *dir, "ircd.yml")
+				time.Sleep(time.Duration(time.Second * 5))
+			}
 		}
 		systray.Run(onReady, onExit)
 	}

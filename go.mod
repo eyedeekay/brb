@@ -27,7 +27,7 @@ require (
 	github.com/mitchellh/mapstructure v1.4.0 // indirect
 	github.com/mmcloughlin/professor v0.0.0-20170922221822-6b97112ab8b3
 	github.com/pelletier/go-toml v1.8.1 // indirect
-	github.com/prologic/eris v1.6.6
+	github.com/prologic/eris v1.6.7-0.20201114221618-690655d8e091
 	github.com/prometheus/client_golang v1.8.0 // indirect
 	github.com/prometheus/common v0.15.0 // indirect
 	github.com/sethvargo/go-password v0.2.0

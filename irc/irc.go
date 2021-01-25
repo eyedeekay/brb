@@ -4,8 +4,10 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	//"strings"
 	"path/filepath"
+	"time"
+
+	"github.com/janosgyerik/portping"
 
 	"github.com/khlieng/dispatch/config"
 	"github.com/khlieng/dispatch/server"
@@ -144,50 +146,52 @@ func initConfig(configPath string, overwrite bool) error {
 }
 
 func IRC(confdir string) {
-	os.MkdirAll(confdir, 0755)
-	if _, err := os.Stat(filepath.Join(confdir, "irc.running")); !os.IsNotExist(err) {
-		return
-	}
-	err := ioutil.WriteFile(filepath.Join(confdir, "irc.running"), []byte(motd), 0644)
-	if err != nil {
-		log.Fatal("Error outputting runfile, %s", err)
-	}
-
-	storage.Initialize(confdir, confdir, confdir)
-
-	err = initConfig(storage.Path.Config(), false)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	log.Println("Storing data at", storage.Path.DataRoot())
-
-	db, err := boltdb.New(storage.Path.Database())
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
-
-	storage.GetMessageStore = func(user *storage.User) (storage.MessageStore, error) {
-		return boltdb.New(storage.Path.Log(user.Username))
-	}
-
-	storage.GetMessageSearchProvider = func(user *storage.User) (storage.MessageSearchProvider, error) {
-		return bleve.New(storage.Path.Index(user.Username))
-	}
-
-	cfg, cfgUpdated := config.LoadConfig()
-	dispatch := server.New(cfg)
-
-	go func() {
-		for {
-			dispatch.SetConfig(<-cfgUpdated)
-			log.Println("New config loaded")
+	if err := portping.Ping("127.0.0.1", "7669", time.Second); err != nil {
+		os.MkdirAll(confdir, 0755)
+		if _, err := os.Stat(filepath.Join(confdir, "irc.running")); !os.IsNotExist(err) {
+			return
 		}
-	}()
+		err := ioutil.WriteFile(filepath.Join(confdir, "irc.running"), []byte(motd), 0644)
+		if err != nil {
+			log.Fatal("Error outputting runfile, %s", err)
+		}
 
-	dispatch.Store = db
-	dispatch.SessionStore = db
+		storage.Initialize(confdir, confdir, confdir)
 
-	dispatch.Run()
+		err = initConfig(storage.Path.Config(), false)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		log.Println("Storing data at", storage.Path.DataRoot())
+
+		db, err := boltdb.New(storage.Path.Database())
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer db.Close()
+
+		storage.GetMessageStore = func(user *storage.User) (storage.MessageStore, error) {
+			return boltdb.New(storage.Path.Log(user.Username))
+		}
+
+		storage.GetMessageSearchProvider = func(user *storage.User) (storage.MessageSearchProvider, error) {
+			return bleve.New(storage.Path.Index(user.Username))
+		}
+
+		cfg, cfgUpdated := config.LoadConfig()
+		dispatch := server.New(cfg)
+
+		go func() {
+			for {
+				dispatch.SetConfig(<-cfgUpdated)
+				log.Println("New config loaded")
+			}
+		}()
+
+		dispatch.Store = db
+		dispatch.SessionStore = db
+
+		dispatch.Run()
+	}
 }

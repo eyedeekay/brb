@@ -8,6 +8,9 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
+
+	"github.com/janosgyerik/portping"
 
 	"github.com/mmcloughlin/professor"
 	"github.com/prologic/eris/irc"
@@ -52,11 +55,11 @@ func OutputAutoLink(dir, configfile string) string {
 		return ""
 	}
 	b321 := strings.Split(string(f), "base32: ")
-	if len(b321) <= 0 {
+	if len(b321) <= 1 {
 		return ""
 	}
 	b322 := strings.Split(b321[1], "\n")
-	if len(b321) <= 0 {
+	if len(b322) <= 0 {
 		return ""
 	}
 	cleaned := strings.Trim(b322[0], " ")
@@ -133,35 +136,37 @@ func OutputServerConfigFile(dir, configfile string) (string, error) {
 }
 
 func IRCServerMain(version, debug bool, dir, configfile string) {
-	os.MkdirAll(dir, 0755)
-	if version {
-		fmt.Printf(irc.FullVersion())
-		os.Exit(0)
-	}
+	if err := portping.Ping("127.0.0.1", "7669", time.Second); err != nil {
+		os.MkdirAll(dir, 0755)
+		if version {
+			fmt.Printf(irc.FullVersion())
+			os.Exit(0)
+		}
 
-	if debug {
-		go professor.Launch(":6060")
-	}
+		if debug {
+			go professor.Launch(":6060")
+		}
 
-	if _, err := os.Stat(filepath.Join(dir, "ircd.running")); !os.IsNotExist(err) {
-		return
-	}
-	err := ioutil.WriteFile(filepath.Join(dir, "ircd.running"), []byte(motd), 0644)
-	if err != nil {
-		log.Fatal("Error outputting runfile, %s", err)
-	}
+		if _, err := os.Stat(filepath.Join(dir, "ircd.running")); !os.IsNotExist(err) {
+			return
+		}
+		err := ioutil.WriteFile(filepath.Join(dir, "ircd.running"), []byte(motd), 0644)
+		if err != nil {
+			log.Fatal("Error outputting runfile, %s", err)
+		}
 
-	_, err = OutputServerConfigFile(dir, configfile)
-	if err != nil {
-		log.Fatal("Config file generation error, %s", err)
-	}
+		_, err = OutputServerConfigFile(dir, configfile)
+		if err != nil {
+			log.Fatal("Config file generation error, %s", err)
+		}
 
-	config, err := irc.LoadConfig(filepath.Join(dir, configfile))
-	if err != nil {
-		log.Fatal("IRC Server Config file did not load successfully:", err.Error())
-	}
+		config, err := irc.LoadConfig(filepath.Join(dir, configfile))
+		if err != nil {
+			log.Fatal("IRC Server Config file did not load successfully:", err.Error())
+		}
 
-	irc.NewServer(config).Run()
+		irc.NewServer(config).Run()
+	}
 }
 
 func Close(dir, configfile string) {
