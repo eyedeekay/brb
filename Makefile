@@ -6,6 +6,9 @@ packagename=brb
 GO_COMPILER_OPTS = -a -tags "netgo osusergo" -ldflags '-w'
 WIN_GO_COMPILER_OPTS = -a -tags "netgo osusergo windows" -ldflags '-H=windowsgui'
 
+ANDROID_HOME=$(HOME)/Android/Sdk
+ANDROID_NDK_HOME=$(HOME)/Android/Sdk/ndk/21.2.6472646
+
 echo:
 	@echo "type make version to do release $(VERSION)"
 

@@ -1,2 +1,3 @@
+include ':brb'
 include ':app'
 rootProject.name = "BRB"
