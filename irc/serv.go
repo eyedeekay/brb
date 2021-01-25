@@ -96,6 +96,9 @@ func OutputServerConfigFile(dir, configfile string) (string, error) {
     name: InvisibleIRC
   server:
     password: ""
+    name: invisibleirc
+    listen:
+      - localhost:6667
     i2plisten:
       invisibleirc:
         i2pkeys: "` + filepath.Join(dir, "iirc") + `"
@@ -136,7 +139,7 @@ func OutputServerConfigFile(dir, configfile string) (string, error) {
 }
 
 func IRCServerMain(version, debug bool, dir, configfile string) {
-	if err := portping.Ping("127.0.0.1", "7669", time.Second); err != nil {
+	if err := portping.Ping("127.0.0.1", "6667", time.Second); err != nil {
 		os.MkdirAll(dir, 0755)
 		if version {
 			fmt.Printf(irc.FullVersion())
