@@ -45,7 +45,7 @@ require (
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	honnef.co/go/tools v0.0.1-2020.1.4 // indirect
-	i2pgit.org/idk/libbrb v0.0.0-20210128002941-3ec0e351d2d9
+	i2pgit.org/idk/libbrb v0.0.0-20210128203557-b0f25c8e129a // indirect
 )
 
 replace github.com/DanielOaks/girc-go v0.0.0-20201118022549-7209d10d54a8 => github.com/goshuirc/irc-go v0.0.0-20200311142257-57fd157327ac

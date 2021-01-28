@@ -76,7 +76,7 @@ droidjar: brb.aar
 	ls $(HOME)/go/src/i2pgit.org/idk/libbrb
 
 brb.aar:
-	gomobile bind -o brb.aar i2pgit.org/idk/libbrb
+	gomobile bind -v -o brb.aar i2pgit.org/idk/libbrb
 
 droid: droidjar setupdroid
 	cd android && \
