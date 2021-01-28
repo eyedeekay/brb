@@ -66,15 +66,21 @@ upload: upload-windows upload-darwin upload-linux
 release: version upload
 
 fmt:
-	gofmt -w -s main.go installer/main.go webview/import.go irc/*.go
+	gofmt -w -s *.go
 
-setupdroid: droidjar
-	cp -v brb.aar android/app/libs/brb.aar
-	cp -v brb.aar android/brb/brb.aar
-	
-droidjar:
-	gomobile bind -o brb.aar ./irc
+setupdroid:
+	cp -v brb.aar $(HOME)/go/src/github.com/eyedeekay/brb/android/app/libs/brb.aar
+	cp -v brb.aar $(HOME)/go/src/github.com/eyedeekay/brb/android/brb/brb.aar
 
-droid: setupdroid
-	cd android && ./gradlew build
+droidjar: brb.aar
+	ls $(HOME)/go/src/i2pgit.org/idk/libbrb
 
+brb.aar:
+	gomobile bind -o brb.aar i2pgit.org/idk/libbrb
+
+droid: droidjar setupdroid
+	cd android && \
+	./gradlew build
+
+clean:
+	rm -f brb brb.exe brb.aar brb-installer.exe brb-sources.jar
