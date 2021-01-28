@@ -13,7 +13,6 @@ import (
 	"time"
 
 	"github.com/eyedeekay/brb/icon"
-	"github.com/eyedeekay/brb/irc"
 	"github.com/eyedeekay/goSam"
 	"github.com/eyedeekay/toopie.html/lib"
 	"github.com/getlantern/go-socks5"
@@ -21,6 +20,7 @@ import (
 	"github.com/janosgyerik/portping"
 	"github.com/webview/webview"
 	"github.com/zserge/lorca"
+	"i2pgit.org/idk/libbrb"
 )
 
 var usage = `Blue Rubber Band
@@ -83,6 +83,8 @@ func Socks() {
 	}
 }
 
+var brb *trayirc.BRB
+
 func main() {
 	flag.Parse()
 	if *shelp || *lhelp {
@@ -90,6 +92,7 @@ func main() {
 		flag.PrintDefaults()
 		return
 	}
+	brb = trayirc.New(*dir, "dispatch.toml", "ircd.yaml", "iirc")
 	if *socksaddr != "" {
 		if err := portping.Ping("127.0.0.1", *socksaddr, time.Second); err != nil {
 			go Socks()
@@ -103,7 +106,7 @@ func main() {
 	go func() {
 		for sig := range c {
 			log.Println(sig)
-			trayirc.Close(*dir, "ircd.yml")
+			brb.Close()
 			os.Exit(0)
 		}
 	}()
@@ -126,8 +129,8 @@ func main() {
 				defer w.Destroy()
 				w.SetTitle("brb")
 				w.SetSize(800, 600, webview.HintNone)
-				log.Println("Reaching self-hosted IRC server", trayirc.OutputAutoLink(*dir, "iirc"))
-				w.Navigate(trayirc.OutputAutoLink(*dir, "iirc"))
+				log.Println("Reaching self-hosted IRC server", brb.OutputAutoLink())
+				w.Navigate(brb.OutputAutoLink())
 				w.Run()
 			} else if *forcewebview {
 				var w webview.WebView
@@ -135,10 +138,10 @@ func main() {
 				defer w.Destroy()
 				w.SetTitle("brb")
 				w.SetSize(800, 600, webview.HintNone)
-				w.Navigate(trayirc.OutputAutoLink(*dir, "iirc"))
+				w.Navigate(brb.OutputAutoLink())
 				w.Run()
 			} else {
-				ui, err := lorca.New(trayirc.OutputAutoLink(*dir, "iirc"), "", 480, 320)
+				ui, err := lorca.New(brb.OutputAutoLink(), "", 480, 320)
 				if err != nil {
 					log.Fatal(err)
 				}
@@ -203,11 +206,11 @@ func main() {
 
 		onExit := func() {
 			log.Println("Exiting now.")
-			defer trayirc.Close(*dir, "ircd.yml")
+			defer brb.Close()
 		}
 		if *ircserver {
 			if err := portping.Ping("127.0.0.1", "6667", time.Second); err != nil {
-				go trayirc.IRCServerMain(false, *debug, *dir, "ircd.yml")
+				go brb.IRCServerMain(false, *debug)
 				time.Sleep(time.Duration(time.Second * 5))
 			}
 		}
@@ -223,7 +226,7 @@ func onReady() {
 	mIRC := systray.AddMenuItem("IRC Chat", "Talk to others on I2P IRC")
 	mSelfIRC := systray.AddMenuItem("Local Group Chat", "Connect to private IRC server")
 	mSelfIRC.Hide()
-	ircurl := trayirc.OutputAutoLink(*dir, "iirc")
+	ircurl := brb.OutputAutoLink()
 	log.Println("Checking whether to un-hide embedded IRC server from menu", ircurl)
 	if ircurl != "" {
 		if *ircserver == true {
@@ -273,5 +276,5 @@ func onReady() {
 			time.Sleep(time.Second)
 		}
 	}()
-	trayirc.IRC(*dir)
+	brb.IRC()
 }

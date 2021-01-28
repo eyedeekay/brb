@@ -75,3 +75,6 @@ setupdroid: droidjar
 droidjar:
 	gomobile bind -o brb.aar ./irc
 
+droid: setupdroid
+	cd android && ./gradlew build
+
