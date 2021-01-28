@@ -15,6 +15,6 @@
 # vendor/
 
 toopie
-brb*
+./brb
 installer/brb.go
 android/signing.properties
