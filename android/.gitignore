@@ -102,3 +102,4 @@ lint/tmp/
 # Android Profiling
 *.hprof
 
+signing.properties
