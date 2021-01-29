@@ -1,4 +1,4 @@
-VERSION=0.0.07
+VERSION=0.0.08
 
 USER_GH=eyedeekay
 packagename=brb
@@ -28,7 +28,7 @@ tar:
 		--exclude examples \
 		-cJvf ../$(packagename)_$(VERSION).orig.tar.xz .
 
-all: windows osx linux
+all: windows osx linux droid
 
 windows-runner: fmt
 	CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename).exe
@@ -49,6 +49,7 @@ linux: fmt
 sumwindows=`sha256sum $(packagename).exe`
 sumwindowsi=`sha256sum $(packagename)-installer.exe`
 sumlinux=`sha256sum $(packagename)`
+sumdroid=`sha256sum ./android/app/build/outputs/apk/release/app-release.apk`
 sumdarwin=`sha256sum $(packagename)-darwin`
 
 upload-windows:
@@ -61,7 +62,10 @@ upload-darwin:
 upload-linux:
 	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumlinux)" -n "$(packagename)" -f "$(packagename)"
 
-upload: upload-windows upload-darwin upload-linux
+upload-android:
+	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumdroid)" -n "$(packagename).apk" -f "./android/app/build/outputs/apk/release/app-release.apk"
+
+upload: upload-windows upload-darwin upload-linux upload-android
 
 release: version upload
 
@@ -84,3 +88,4 @@ droid: droidjar setupdroid
 
 clean:
 	rm -f brb brb.exe brb.aar brb-installer.exe brb-sources.jar
+
