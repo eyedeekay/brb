@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setProxy();
+        //setProxy();
         setContentView(R.layout.activity_main);
 
         WebView webView = findViewById(R.id.webView);
@@ -44,13 +44,18 @@ public class MainActivity extends AppCompatActivity {
         webView.getSettings().setDomStorageEnabled(true);
         String databasePath = webView.getContext().getDir("databases", Context.MODE_PRIVATE).getPath();
         webView.getSettings().setDatabasePath(databasePath);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        webView.setScrollbarFadingEnabled(false);
+        webView.setVerticalScrollBarEnabled(true);
+        webView.setHorizontalScrollBarEnabled(true);
         //webView.setWebViewClient(webViewI2PClient);
         webView.loadUrl("http://127.0.0.1:7669");
     }
     @Override
     protected void onResume(){
         super.onResume();
-        setProxy();
+        //setProxy();
         WebView webView = findViewById(R.id.webView);
         webView.loadUrl("http://127.0.0.1:7669");
     }
