@@ -62,10 +62,13 @@ upload-darwin:
 upload-linux:
 	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumlinux)" -n "$(packagename)" -f "$(packagename)"
 
-upload-android:
-	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumdroid)" -n "$(packagename).apk" -f "./android/app/build/outputs/apk/release/app-release.apk"
+release-android:
+	gothub release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION)-testing -d "version $(VERSION)"
 
-upload: upload-windows upload-darwin upload-linux upload-android
+upload-android:
+	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION)-testing -l "$(sumdroid)" -n "$(packagename).apk" -f "./android/app/build/outputs/apk/release/app-release.apk"
+
+upload: upload-windows upload-darwin upload-linux release-android upload-android
 
 release: version upload
 
