@@ -8,7 +8,6 @@ public class BRBRunnable implements Runnable {
 
     @Override
     public void run() {
-        brb.irc();
-        brb.ircServerMain(false,false);
+        brb.run();
     }
 }

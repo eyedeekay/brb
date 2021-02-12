@@ -1,4 +1,5 @@
 VERSION=0.0.08
+testing=beta
 
 USER_GH=eyedeekay
 packagename=brb
@@ -63,10 +64,10 @@ upload-linux:
 	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumlinux)" -n "$(packagename)" -f "$(packagename)"
 
 release-android:
-	gothub release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION)-testing -d "version $(VERSION)"
+	gothub release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION)-$(testing) -d "version $(VERSION)"
 
 upload-android:
-	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION)-testing -l "$(sumdroid)" -n "$(packagename).apk" -f "./android/app/build/outputs/apk/release/app-release.apk"
+	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION)-$(testing) -l "$(sumdroid)" -n "$(packagename).apk" -f "./android/app/build/outputs/apk/release/app-release.apk"
 
 upload: upload-windows upload-darwin upload-linux release-android upload-android
 
