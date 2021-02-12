@@ -92,7 +92,21 @@ func main() {
 		flag.PrintDefaults()
 		return
 	}
-	brb = trayirc.New(*dir, "dispatch.toml", "ircd.yaml", "iirc")
+//	brb = trayirc.NewBRB(*dir, "dispatch.toml", "ircd.yaml", "iirc")
+  var err error
+	brb, err = trayirc.NewBRBFromOptions(
+	  trayirc.SetSAMPort(*sam), 
+	  trayirc.SetSAMHost("127.0.0.1"),
+		trayirc.SetSaveFile(true),
+		trayirc.SetName("brb"),
+		trayirc.SetBRBConfigDirectory(*dir),
+		trayirc.SetBRBServerConfig("ircd.yaml"),
+		trayirc.SetBRBServerName("iirc"),
+		trayirc.SetHostInI2P(true),
+	)
+	if err != nil {
+	  log.Fatal(err)
+	}
 	if *socksaddr != "" {
 		if err := portping.Ping("127.0.0.1", *socksaddr, time.Second); err != nil {
 			go Socks()
@@ -226,6 +240,7 @@ func onReady() {
 	mIRC := systray.AddMenuItem("IRC Chat", "Talk to others on I2P IRC")
 	mSelfIRC := systray.AddMenuItem("Local Group Chat", "Connect to private IRC server")
 	mSelfIRC.Hide()
+	time.Sleep(time.Second * 5)
 	ircurl := brb.OutputAutoLink()
 	log.Println("Checking whether to un-hide embedded IRC server from menu", ircurl)
 	if ircurl != "" {
@@ -277,4 +292,5 @@ func onReady() {
 		}
 	}()
 	brb.IRC()
+//	brb.SAMForwarder.Serve()
 }
