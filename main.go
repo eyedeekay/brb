@@ -49,7 +49,7 @@ var (
 	forcewebview = flag.Bool("webview", false, "(Windows-Only)Force the use of a WebView window instead of a Lorca window")
 	monitor      = flag.Bool("toopie", false, "Launch toopie.html to monitor I2P router health.")
 	ircserver    = flag.Bool("eris", true, "Launch embedded Eris IRC Server instance on an I2P service.")
-	i2pdispatch  = flag.Bool("i2psite", true, "Launch embedded Dispatch server as an I2P site")
+	i2pdispatch  = flag.Bool("i2psite", false, "Launch embedded Dispatch server as an I2P site")
 	//	local  = flag.Bool("no-i2prc", false, "Connect to locally-hosted IRC server, not I2PRC.")
 	plt   = false
 	local = &plt
@@ -104,6 +104,7 @@ func main() {
 		trayirc.SetSaveFile(true),
 		trayirc.SetName("brb"),
 		trayirc.SetType("server"),
+		trayirc.SetFilePath(*dir),
 		trayirc.SetBRBConfigDirectory(*dir),
 		trayirc.SetBRBServerConfig("ircd.yaml"),
 		trayirc.SetBRBServerName("iirc"),

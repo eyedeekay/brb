@@ -1,5 +1,5 @@
 VERSION=0.0.08
-testing=beta
+testing=rc1
 
 USER_GH=eyedeekay
 packagename=brb
