@@ -12,6 +12,7 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/atotto/clipboard"
 	"github.com/eyedeekay/brb/icon"
 	"github.com/eyedeekay/goSam"
 	"github.com/eyedeekay/toopie.html/lib"
@@ -48,6 +49,7 @@ var (
 	forcewebview = flag.Bool("webview", false, "(Windows-Only)Force the use of a WebView window instead of a Lorca window")
 	monitor      = flag.Bool("toopie", false, "Launch toopie.html to monitor I2P router health.")
 	ircserver    = flag.Bool("eris", true, "Launch embedded Eris IRC Server instance on an I2P service.")
+	i2pdispatch  = flag.Bool("i2psite", true, "Launch embedded Dispatch server as an I2P site")
 	//	local  = flag.Bool("no-i2prc", false, "Connect to locally-hosted IRC server, not I2PRC.")
 	plt   = false
 	local = &plt
@@ -92,20 +94,40 @@ func main() {
 		flag.PrintDefaults()
 		return
 	}
-//	brb = trayirc.NewBRB(*dir, "dispatch.toml", "ircd.yaml", "iirc")
-  var err error
+	//	brb = trayirc.NewBRB(*dir, "dispatch.toml", "ircd.yaml", "iirc")
+	var err error
 	brb, err = trayirc.NewBRBFromOptions(
-	  trayirc.SetSAMPort(*sam), 
-	  trayirc.SetSAMHost("127.0.0.1"),
+		trayirc.SetSAMPort(*sam),
+		trayirc.SetSAMHost("127.0.0.1"),
+		trayirc.SetHost("127.0.0.1"),
+		trayirc.SetPort("7669"),
 		trayirc.SetSaveFile(true),
 		trayirc.SetName("brb"),
+		trayirc.SetType("server"),
 		trayirc.SetBRBConfigDirectory(*dir),
 		trayirc.SetBRBServerConfig("ircd.yaml"),
 		trayirc.SetBRBServerName("iirc"),
-		trayirc.SetHostInI2P(true),
+		trayirc.SetHostInI2P(*i2pdispatch),
+		trayirc.SetInLength(3),
+		trayirc.SetOutLength(3),
+		trayirc.SetInVariance(0),
+		trayirc.SetOutVariance(0),
+		trayirc.SetInQuantity(3),
+		trayirc.SetOutQuantity(3),
+		trayirc.SetInBackups(1),
+		trayirc.SetOutBackups(1),
+		trayirc.SetEncrypt(false),
+		trayirc.SetAllowZeroIn(false),
+		trayirc.SetAllowZeroOut(false),
+		trayirc.SetCompress(true),
+		trayirc.SetReduceIdle(false),
+		trayirc.SetReduceIdleTimeMs(3000000),
+		trayirc.SetReduceIdleQuantity(2),
+		trayirc.SetAccessListType("none"),
+		trayirc.SetAccessList([]string{}),
 	)
 	if err != nil {
-	  log.Fatal(err)
+		log.Fatal(err)
 	}
 	if *socksaddr != "" {
 		if err := portping.Ping("127.0.0.1", *socksaddr, time.Second); err != nil {
@@ -239,9 +261,11 @@ func onReady() {
 	systray.AddSeparator()
 	mIRC := systray.AddMenuItem("IRC Chat", "Talk to others on I2P IRC")
 	mSelfIRC := systray.AddMenuItem("Local Group Chat", "Connect to private IRC server")
+	mSelfDispatch := systray.AddMenuItem("Copy Webchat URL", "Copy the I2P site for your web chat to the clipboard")
 	mSelfIRC.Hide()
 	time.Sleep(time.Second * 5)
 	ircurl := brb.OutputAutoLink()
+	webircurl := brb.Base32()
 	log.Println("Checking whether to un-hide embedded IRC server from menu", ircurl)
 	if ircurl != "" {
 		if *ircserver == true {
@@ -271,6 +295,14 @@ func onReady() {
 			}()
 
 			go func() {
+				<-mSelfDispatch.ClickedCh
+				err := clipboard.WriteAll("http://" + webircurl)
+				if err != nil {
+					panic(err)
+				}
+			}()
+
+			go func() {
 				<-mSelfIRC.ClickedCh
 				ex, err := os.Executable()
 				if err != nil {
@@ -291,6 +323,11 @@ func onReady() {
 			time.Sleep(time.Second)
 		}
 	}()
-	brb.IRC()
-//	brb.SAMForwarder.Serve()
+	if *i2pdispatch {
+		go brb.IRC()
+		brb.SAMForwarder.Serve()
+	} else {
+		brb.IRC()
+	}
+
 }

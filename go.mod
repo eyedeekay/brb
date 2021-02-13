@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/RoaringBitmap/roaring v0.5.5 // indirect
+	github.com/atotto/clipboard v0.1.2
 	github.com/benbjohnson/clock v1.1.0 // indirect
 	github.com/blevesearch/bleve v1.0.14 // indirect
 	github.com/caddyserver/certmagic v0.12.0 // indirect
@@ -41,7 +42,7 @@ require (
 	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/square/go-jose.v2 v2.5.1 // indirect
-	i2pgit.org/idk/libbrb v0.0.0-20210212223958-b04a24a3fc7b
+	i2pgit.org/idk/libbrb v0.0.0-20210212235910-47566bb780a4
 )
 
 replace github.com/prologic/eris v1.6.6 => github.com/eyedeekay/eris v1.6.7-0.20210212212337-98519bfaa54e
