@@ -1,11 +1,13 @@
 package io.github.eyedeekay.brb;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import java.net.Proxy;
 import java.net.ProxySelector;
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         WebView webView = findViewById(R.id.webView);
 
-        Launch(trayirc);
+        startService(trayirc);
 
         webView.getSettings().setJavaScriptEnabled(true);
 
@@ -63,6 +65,13 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Runnable","Launching BRB");
         service.submit(r);
         Log.d("Runnable","Launched BRB");
+    }
+    public void startService(BRBRunnable r) {
+        Launch(r);
+        Intent serviceIntent = new Intent(this, ForegroundService.class);
+        serviceIntent.putExtra("inputExtra", getString(R.string.BRBIsRunning));
+
+        ContextCompat.startForegroundService(this, serviceIntent);
     }
     private void setProxy() {
         try {

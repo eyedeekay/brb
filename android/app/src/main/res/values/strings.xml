@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BRB</string>
+    <string name="ForegroundServiceName">BRB IRC Service</string>
+    <string name="BRBIsRunning">BRB IRC Service Running.</string>
 </resources>
