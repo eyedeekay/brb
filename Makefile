@@ -1,95 +1,93 @@
-VERSION=0.0.08
-testing=rc1
 
-USER_GH=eyedeekay
-packagename=brb
-
-GO_COMPILER_OPTS = -a -tags "netgo osusergo" -ldflags '-w'
-WIN_GO_COMPILER_OPTS = -a -tags "netgo osusergo windows" -ldflags '-H=windowsgui'
-
-export ANDROID_HOME=$(HOME)/Android/Sdk
-export ANDROID_NDK_HOME=$(HOME)/Android/Sdk/ndk/21.2.6472646
+export GOPATH=$(HOME)/go
+GOPATH=$(HOME)/go
+VERSION=0.0.01
 
 echo:
-	@echo "type make version to do release $(VERSION)"
+	@echo WIP be careful
 
-run:
-	go build && ./brb
+releases: $(GOPATH)/src/i2pgit.org/idk/railroad prep
+	cd $(GOPATH)/src/i2pgit.org/idk/railroad
+	rm -f *.tar.gz *.deb *.zip
+	go build -o railroad
+	#CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build -ldflags -H=windowsgui -o railroad.exe
+	xgo --targets=windows/amd64 . && mv railroad-windows-4.0-amd64.exe railroad.exe
+	wget -O WebView2Loader.dll https://github.com/webview/webview/raw/master/dll/x64/WebView2Loader.dll
+	wget -O webview.dll https://github.com/webview/webview/raw/master/dll/x64/webview.dll
+	makensis railroad.nsi
+	cp ../railroad-installer.exe .
+	cd ../ && \
+	tar --exclude=railroad/.git -zcvf railroad.tar.gz railroad  && \
+	zip -x=railroad/.git -r railroad.zip railroad
+	mv ../railroad.tar.gz railroad.tar.gz
+	mv ../railroad.zip railroad.zip
+	make checkinstall
+	make unprep
 
-version:
-	gothub release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION) -d "version $(VERSION)"
-
-del:
-	gothub delete -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION)
-
-tar:
-	tar --exclude .git \
-		--exclude .go \
-		--exclude bin \
-		--exclude examples \
-		-cJvf ../$(packagename)_$(VERSION).orig.tar.xz .
-
-all: windows osx linux droid
-
-windows-runner: fmt
-	CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename).exe
-	2goarray BRB main < brb.exe > installer/brb.go
-
-windows: 
-  #windows-runner
-	CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-installer.exe ./installer
-	#CC=i686-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows GOARCG=i386 go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-32.exe
-
-osx: fmt
-	#GOARCH=386 GOOS=darwin go build $(GO_COMPILER_OPTS) -o $(packagename)-darwin-386
-	#GOOS=darwin go build $(GO_COMPILER_OPTS) -o $(packagename)-darwin
-
-linux: fmt
-	GOOS=linux go build $(GO_COMPILER_OPTS) -o $(packagename)
-
-sumwindows=`sha256sum $(packagename).exe`
-sumwindowsi=`sha256sum $(packagename)-installer.exe`
-sumlinux=`sha256sum $(packagename)`
-sumdroid=`sha256sum ./android/app/build/outputs/apk/release/app-release.apk`
-sumdarwin=`sha256sum $(packagename)-darwin`
-
-upload-windows:
-	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumwindows)" -n "$(packagename).exe" -f "$(packagename).exe"
-	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumwindowsi)" -n "$(packagename)-installer.exe" -f "$(packagename)-installer.exe"
-
-upload-darwin:
-	#gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumdarwin)" -n "$(packagename)-darwin" -f "$(packagename)-darwin"
-
-upload-linux:
-	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumlinux)" -n "$(packagename)" -f "$(packagename)"
-
-release-android:
-	gothub release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION)-$(testing) -d "version $(VERSION)"
-
-upload-android:
-	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION)-$(testing) -l "$(sumdroid)" -n "$(packagename).apk" -f "./android/app/build/outputs/apk/release/app-release.apk"
-
-upload: upload-windows upload-darwin upload-linux release-android upload-android
-
-release: version upload
-
-fmt:
-	gofmt -w -s *.go
-
-setupdroid:
-	cp -v brb.aar $(HOME)/go/src/github.com/eyedeekay/brb/android/app/libs/brb.aar
-	cp -v brb.aar $(HOME)/go/src/github.com/eyedeekay/brb/android/brb/brb.aar
-
-droidjar: brb.aar
-	ls $(HOME)/go/src/i2pgit.org/idk/libbrb
-
-brb.aar:
-	gomobile bind -v -o brb.aar i2pgit.org/idk/libbrb
-
-droid: droidjar setupdroid
-	cd android && \
-	./gradlew build
+$(GOPATH)/src/i2pgit.org/idk/railroad:
+	mkdir -p $(GOPATH)/src/i2pgit.org/idk/railroad
+	git clone https://i2pgit.org/idk/railroad $(GOPATH)/src/i2pgit.org/idk/railroad
 
 clean:
-	rm -f brb brb.exe brb.aar brb-installer.exe brb-sources.jar
+	rm -rf *.exe *.private railroad *.public.txt
 
+sums:
+	sha256sum *.tar.gz *.zip *.deb *-installer.exe
+	ls -lah *.tar.gz *.zip *.deb *-installer.exe
+
+prep: clean
+	mv railroad.i2p.private ../; true
+	mv .git ../railroad.git
+
+unprep:
+	mv ../railroad.i2p.private .; true
+	mv ../railroad.git .git
+
+install:
+	mkdir -p /usr/local/lib/railroad/config
+	rm -rf /usr/local/lib/railroad/config/content \
+		/usr/local/lib/railroad/config/built-in
+	cp -R content /usr/local/lib/railroad/config/content
+	cp -R built-in /usr/local/lib/railroad/config/built-in
+	install -m755 railroad.sh /usr/local/bin/railroad
+	install -m755 railroad /usr/local/lib/railroad/railroad
+	cp res/desktop/i2prailroad.desktop /usr/share/applications
+
+uninstall:
+	rm -rf /usr/local/bin/railroad \
+		/usr/local/lib/railroad/
+
+checkinstall:
+	checkinstall \
+		--default \
+		--install=no \
+		--fstrans=yes \
+		--pkgname=i2p-railroad \
+		--pkgversion=$(VERSION) \
+		--pkggroup=net \
+		--pkgrelease=1 \
+		--pkgsource="https://i2pgit.org/idk/railroad" \
+		--maintainer="hankhill19580@gmail.com" \
+		--requires="libgtk-3-dev,libappindicator3-dev,libwebkit2gtk-4.0-dev,xclip,wl-clipboard,i2p,i2p-router" \
+		--suggests="i2p,i2p-router,syndie,tor,tsocks" \
+		--nodoc \
+		--deldoc=yes \
+		--deldesc=yes \
+		--backup=no
+
+index:
+	@echo "<!DOCTYPE html>" > index.html
+	@echo "<html>" >> index.html
+	@echo "<head>" >> index.html
+	@echo "  <title>Railroad, anonymous blogging based on Journey</title>" >> index.html
+	@echo "  <link rel=\"stylesheet\" type=\"text/css\" href =\"home.css\" />" >> index.html
+	@echo "</head>" >> index.html
+	@echo "<body>" >> index.html
+	markdown README.md | tee -a index.html
+	@echo "</body>" >> index.html
+	@echo "</html>" >> index.html
+
+nsis: prep
+	makensis railroad.nsi
+	cp ../railroad-installer.exe .
+	make unprep
