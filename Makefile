@@ -93,14 +93,14 @@ droid: droidjar setupdroid
 clean:
 	rm -f brb brb.exe brb.aar brb-installer.exe brb-sources.jar
 
--index:
--       @echo "<!DOCTYPE html>" > index.html
--       @echo "<html>" >> index.html
--       @echo "<head>" >> index.html
--       @echo "  <title>BRB, IRC Client, Self-Hosted Anonymous Groupchat</title>" >> index.html
--       @echo "  <link rel=\"stylesheet\" type=\"text/css\" href =\"home.css\" />" >> index.html
--       @echo "</head>" >> index.html
--       @echo "<body>" >> index.html
--       markdown README.md | tee -a index.html
--       @echo "</body>" >> index.html
--       @echo "</html>" >> index.html
+index:
+	@echo "<!DOCTYPE html>" > index.html
+	@echo "<html>" >> index.html
+	@echo "<head>" >> index.html
+	@echo "  <title>BRB, IRC Client, Self-Hosted Anonymous Groupchat</title>" >> index.html
+	@echo "  <link rel=\"stylesheet\" type=\"text/css\" href =\"home.css\" />" >> index.html
+	@echo "</head>" >> index.html
+	@echo "<body>" >> index.html
+	markdown README.md | tee -a index.html
+	@echo "</body>" >> index.html
+	@echo "</html>" >> index.html
