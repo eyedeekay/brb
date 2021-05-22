@@ -44,7 +44,7 @@ Section
     # create a shortcut named "new shortcut" in the start menu programs directory
     # point the new shortcut at the program uninstaller
     CreateShortcut "$SMPROGRAMS\Chat with brb.lnk" "$INSTDIR\brb.exe"
-    CreateShortcut "$SMPROGRAMS\Uninstall brb Blog.lnk" "$INSTDIR\uninstall.exe"
+    CreateShortcut "$SMPROGRAMS\Uninstall brb Chat.lnk" "$INSTDIR\uninstall.exe"
 SectionEnd
  
 # uninstaller section start
@@ -57,7 +57,7 @@ Section "uninstall"
     # second, remove the link from the start menu
 
     Delete "$SMPROGRAMS\Chat with brb.lnk"
-    Delete "$SMPROGRAMS\new shortcut.lnk"
+    Delete "$SMPROGRAMS\Uninstall brb Chat.lnk" "$INSTDIR\uninstall.exe"
 
     Call un.installZero
 
