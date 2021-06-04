@@ -2,6 +2,8 @@ package io.github.eyedeekay.brb;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.ActivityNotFoundException;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        openApp(this, "i2p.andoid.base");
         setProxy();
         setContentView(R.layout.activity_main);
 
@@ -73,6 +76,31 @@ public class MainActivity extends AppCompatActivity {
 
         ContextCompat.startForegroundService(this, serviceIntent);
     }
+
+    /** 
+     * https://stackoverflow.com/questions/2780102/open-another-application-from-your-own-intent#7596063
+     * Open another app.
+     * @param context current Context, like Activity, App, or Service
+     * @param packageName the full package name of the app to open
+     * @return true if likely successful, false if unsuccessful
+     */
+    public static boolean openApp(Context context, String packageName) {
+    PackageManager manager = context.getPackageManager();
+        try {
+            Intent i = manager.getLaunchIntentForPackage(packageName);
+            if (i == null) {
+                return false;
+                //throw new ActivityNotFoundException();
+            }
+            i.addCategory(Intent.CATEGORY_LAUNCHER);
+            context.startActivity(i);
+            return true;
+        } catch (ActivityNotFoundException e) {
+            return false;
+        }
+    }
+
+
     private void setProxy() {
         try {
             String proxyHost = "127.0.0.1";

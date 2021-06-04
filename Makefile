@@ -8,7 +8,7 @@ GO_COMPILER_OPTS = -a -tags "netgo osusergo" -ldflags '-w'
 WIN_GO_COMPILER_OPTS = -a -tags "netgo osusergo windows" -ldflags '-H=windowsgui'
 
 export ANDROID_HOME=$(HOME)/Android/Sdk
-export ANDROID_NDK_HOME=$(HOME)/Android/Sdk/ndk/21.2.6472646
+#export ANDROID_NDK_HOME=$(HOME)/Android/Sdk/ndk/21.2.6472646
 
 echo:
 	@echo "type make version to do release $(VERSION)"
@@ -76,17 +76,13 @@ release: version upload
 fmt:
 	gofmt -w -s *.go
 
-setupdroid:
-	cp -v brb.aar $(HOME)/go/src/github.com/eyedeekay/brb/android/app/libs/brb.aar
-	cp -v brb.aar $(HOME)/go/src/github.com/eyedeekay/brb/android/brb/brb.aar
-
-droidjar: brb.aar
+droidjar: android/app/libs/brb.aar
 	ls $(HOME)/go/src/i2pgit.org/idk/libbrb
 
-brb.aar:
+android/app/libs/brb.aar:
 	gomobile bind -v -o brb.aar i2pgit.org/idk/libbrb
 
-droid: droidjar setupdroid
+droid: droidjar
 	cd android && \
 	./gradlew build
 
