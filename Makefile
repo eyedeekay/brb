@@ -1,4 +1,4 @@
-VERSION=0.0.08
+VERSION=0.0.09
 testing=rc1
 
 USER_GH=eyedeekay
@@ -76,11 +76,11 @@ release: version upload
 fmt:
 	gofmt -w -s *.go
 
-droidjar: android/app/libs/brb.aar
+droidjar: android/brb/brb.aar
 	ls $(HOME)/go/src/i2pgit.org/idk/libbrb
 
-android/app/libs/brb.aar:
-	gomobile bind -v -o brb.aar i2pgit.org/idk/libbrb
+android/brb/brb.aar:
+	gomobile bind -v -o android/brb/brb.aar i2pgit.org/idk/libbrb
 
 droid: droidjar
 	cd android && \
