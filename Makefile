@@ -120,6 +120,7 @@ plugin-linux: clean linux
 		-exename=brb \
 		-license=MIT
 	cp -v *.su3 ../brb-linux.su3
+	cp -v ../brb-linux.su3 .
 	unzip -o brb.zip -d brb-zip
 
 plugin-windows: clean windows
@@ -138,4 +139,8 @@ plugin-windows: clean windows
 		-targetos="windows" \
 		-res=windll
 	cp -v *.su3 ../brb-windows.su3
+	cp -v ../brb-windows.su3 .
 	unzip -o brb.zip -d brb-zip-win
+
+export sumbblinux=`sha256sum "../brb-linux.su3"`
+export sumbbwindows=`sha256sum "../brb-windows.su3"`
