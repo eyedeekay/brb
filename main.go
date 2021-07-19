@@ -324,8 +324,9 @@ func onReady() {
 		}
 	}()
 	if *i2pdispatch {
-		go brb.IRC()
-		brb.SAMForwarder.Serve()
+		//go
+		brb.Serve() //IRC()
+		//brb.SAMForwarder.Serve()
 	} else {
 		brb.IRC()
 	}
