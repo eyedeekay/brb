@@ -1,4 +1,4 @@
-VERSION=0.0.09
+VERSION=0.0.10
 testing=rc1
 
 USER_GH=eyedeekay
@@ -35,8 +35,7 @@ windows-runner: fmt
 	CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename).exe
 	2goarray BRB main < brb.exe > installer/brb.go
 
-windows: 
-  #windows-runner
+windows: windows-runner
 	CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-installer.exe ./installer
 	#CC=i686-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows GOARCG=i386 go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-32.exe
 
@@ -69,6 +68,10 @@ release-android:
 upload-android:
 	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION)-$(testing) -l "$(sumdroid)" -n "$(packagename).apk" -f "./android/app/build/outputs/apk/release/app-release.apk"
 
+upload-plugins:
+	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbblinux)" -n "brb-linux.su3" -f "../brb-linux.su3"
+	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbbwindows)" -n "brb-windows.su3" -f "../brb-windows.su3"
+
 upload: upload-windows upload-darwin upload-linux release-android upload-android
 
 release: version upload
@@ -100,3 +103,39 @@ index:
 	markdown README.md | tee -a index.html
 	@echo "</body>" >> index.html
 	@echo "</html>" >> index.html
+
+plugins: plugin-linux plugin-windows
+
+plugin-linux: clean linux
+	i2p.plugin.native -name=brb \
+		-signer=hankhill19580@gmail.com \
+		-version "$(VERSION)" \
+		-author=hankhill19580@gmail.com \
+		-autostart=true \
+		-clientname=brb \
+		-command="\$$PLUGIN/lib/brb -dir=\$$PLUGIN/lib -eris=true -i2psite=true" \
+		-consolename="BRB IRC" \
+		-delaystart="1" \
+		-desc="`cat ircdesc`" \
+		-exename=brb \
+		-license=MIT
+	cp -v *.su3 ../brb-linux.su3
+	unzip -o brb.zip -d brb-zip
+
+plugin-windows: clean windows
+	i2p.plugin.native -name=brb \
+		-signer=hankhill19580@gmail.com \
+		-version "$(VERSION)" \
+		-author=hankhill19580@gmail.com \
+		-autostart=true \
+		-clientname=brb.exe \
+		-command="\$$PLUGIN/lib/brb.exe -dir=\$$PLUGIN/lib -eris=true -i2psite=true" \
+		-consolename="BRB IRC" \
+		-delaystart="1" \
+		-desc="`cat ircdesc`" \
+		-exename=brb.exe \
+		-license=MIT \
+		-targetos="windows" \
+		-res=windll
+	cp -v *.su3 ../brb-windows.su3
+	unzip -o brb.zip -d brb-zip-win
