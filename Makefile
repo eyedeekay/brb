@@ -72,7 +72,7 @@ upload-plugins:
 	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbblinux)" -n "brb-linux.su3" -f "../brb-linux.su3"
 	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbbwindows)" -n "brb-windows.su3" -f "../brb-windows.su3"
 
-upload: upload-windows upload-darwin upload-linux release-android upload-android
+upload: upload-windows upload-darwin upload-linux release-android upload-android upload-pluginss
 
 release: version upload
 
