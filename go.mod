@@ -17,6 +17,6 @@ require (
 	i2pgit.org/idk/libbrb v0.0.0-20210212235910-47566bb780a4
 )
 
-replace github.com/prologic/eris => github.com/prologic/eris v1.6.7-0.20210430033226-64d4acc46ca7
+replace git.mills.io/prologic/eris => git.mills.io/prologic/eris v1.6.7-0.20210430033226-64d4acc46ca7
 
 replace i2pgit.org/idk/libbrb => ../../../i2pgit.org/idk/libbrb
