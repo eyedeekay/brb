@@ -113,13 +113,16 @@ plugin-linux: clean linux
 		-author=hankhill19580@gmail.com \
 		-autostart=true \
 		-clientname=brb \
-		-command="\$$PLUGIN/lib/brb -dir=\$$PLUGIN/lib -eris=true -i2psite=true" \
+		-consolename="BRB Chat" \
+		-consoleurl="http://127.0.0.1:7669" \
+		-command="brb -dir=\$$PLUGIN/lib -eris=true -i2psite=true" \
 		-consolename="BRB IRC" \
-		-delaystart="1" \
+		-delaystart="200" \
+		-icondata=icon/icon.png \
 		-desc="`cat ircdesc`" \
 		-exename=brb \
 		-license=MIT
-	cp -v *.su3 ../brb-linux.su3
+	cp -v brb.su3 ../brb-linux.su3
 	cp -v ../brb-linux.su3 .
 	unzip -o brb.zip -d brb-zip
 
@@ -130,15 +133,18 @@ plugin-windows: clean windows
 		-author=hankhill19580@gmail.com \
 		-autostart=true \
 		-clientname=brb.exe \
-		-command="\$$PLUGIN/lib/brb.exe -dir=\$$PLUGIN/lib -eris=true -i2psite=true" \
+		-consolename="BRB Chat" \
+		-consoleurl="http://127.0.0.1:7669" \
+		-command="brb.exe -dir=\$$PLUGIN/lib -eris=true -i2psite=true" \
 		-consolename="BRB IRC" \
-		-delaystart="1" \
+		-delaystart="200" \
 		-desc="`cat ircdesc`" \
+		-icondata=icon/icon.png \
 		-exename=brb.exe \
 		-license=MIT \
 		-targetos="windows" \
 		-res=windll
-	cp -v *.su3 ../brb-windows.su3
+	cp -v brb.su3 ../brb-windows.su3
 	cp -v ../brb-windows.su3 .
 	unzip -o brb.zip -d brb-zip-win
 
