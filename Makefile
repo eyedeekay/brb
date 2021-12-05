@@ -132,7 +132,7 @@ plugin-linux: clean linux
 	cp -v ../brb-linux.su3 .
 	unzip -o brb.zip -d brb-zip
 
-plugin-windows: clean windows
+plugin-windows: clean windows-runner
 	i2p.plugin.native -name=brb \
 		-signer=hankhill19580@gmail.com \
 		-version "$(VERSION)" \
