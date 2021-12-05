@@ -1,4 +1,4 @@
-VERSION=0.0.10
+VERSION=0.0.11
 testing=rc1
 
 USER_GH=eyedeekay
@@ -106,6 +106,11 @@ index:
 
 plugins: plugin-linux plugin-windows
 
+jarstmp:
+	mkdir -p tmp/res/lib windll/lib
+	cp -v $(HOME)/Workspace/GIT_WORK/i2p.i2p/build/shellservice.jar tmp/res/lib/
+	cp -v $(HOME)/Workspace/GIT_WORK/i2p.i2p/build/shellservice.jar windll/lib/
+
 plugin-linux: clean linux
 	i2p.plugin.native -name=brb \
 		-signer=hankhill19580@gmail.com \
@@ -115,13 +120,14 @@ plugin-linux: clean linux
 		-clientname=brb \
 		-consolename="BRB Chat" \
 		-consoleurl="http://127.0.0.1:7669" \
-		-command="brb -dir=\$$PLUGIN/lib -eris=true -i2psite=true" \
+		-command="brb -dir \$$PLUGIN/lib -eris=true -i2psite=true" \
 		-consolename="BRB IRC" \
-		-delaystart="200" \
+		-delaystart="3" \
 		-icondata=icon/icon.png \
 		-desc="`cat ircdesc`" \
 		-exename=brb \
-		-license=MIT
+		-license=MIT \
+		-res="tmp/res/"
 	cp -v brb.su3 ../brb-linux.su3
 	cp -v ../brb-linux.su3 .
 	unzip -o brb.zip -d brb-zip
@@ -135,9 +141,9 @@ plugin-windows: clean windows
 		-clientname=brb.exe \
 		-consolename="BRB Chat" \
 		-consoleurl="http://127.0.0.1:7669" \
-		-command="brb.exe -dir=\$$PLUGIN/lib -eris=true -i2psite=true" \
+		-command="brb.exe -dir \$$PLUGIN/lib -eris=true -i2psite=true" \
 		-consolename="BRB IRC" \
-		-delaystart="200" \
+		-delaystart="3" \
 		-desc="`cat ircdesc`" \
 		-icondata=icon/icon.png \
 		-exename=brb.exe \
