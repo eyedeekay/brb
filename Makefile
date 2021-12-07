@@ -29,14 +29,14 @@ tar:
 		--exclude examples \
 		-cJvf ../$(packagename)_$(VERSION).orig.tar.xz .
 
-all: windows osx linux droid
+all: windows osx linux plugins droid
 
 windows-runner: fmt
-	CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename).exe
+	CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-windows.exe
 	2goarray BRB main < brb.exe > installer/brb.go
 
 windows: windows-runner
-	CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-installer.exe ./installer
+	#CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-installer.exe ./installer
 	#CC=i686-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows GOARCG=i386 go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-32.exe
 
 osx: fmt
@@ -72,7 +72,7 @@ upload-plugins:
 	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbblinux)" -n "brb-linux.su3" -f "../brb-linux.su3"
 	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbbwindows)" -n "brb-windows.su3" -f "../brb-windows.su3"
 
-upload: upload-windows upload-darwin upload-linux release-android upload-android upload-pluginss
+upload: upload-windows upload-darwin upload-linux release-android upload-android upload-plugins
 
 release: version upload
 
@@ -107,17 +107,31 @@ index:
 plugins: plugin-linux plugin-windows
 
 jarstmp:
-	mkdir -p tmp/res/lib windll/lib
+	mkdir -p tmp/res/lib
 	cp -v $(HOME)/Workspace/GIT_WORK/i2p.i2p/build/shellservice.jar tmp/res/lib/
-	cp -v $(HOME)/Workspace/GIT_WORK/i2p.i2p/build/shellservice.jar windll/lib/
+	make tmp/res/lib/WebView2Loader.dll tmp/res/lib/webview.dll
+
+tmp/res/lib/WebView2Loader.dll:
+	wget -O tmp/res/lib/WebView2Loader.dll https://github.com/webview/webview/raw/master/dll/x64/WebView2Loader.dll
+
+tmp/res/lib/webview.dll:
+	wget -O tmp/res/lib/webview.dll https://github.com/webview/webview/raw/master/dll/x64/webview.dll
+
+plugins: jarstmp plugin-linux plugin-windows
 
 plugin-linux: clean linux
-	i2p.plugin.native -name=brb \
+	GOOS=linux make plugin
+
+plugin-windows: clean windows-runner
+	GOOS=windows make plugin
+
+plugin:
+	i2p.plugin.native -name=brb-$(GOOS)
 		-signer=hankhill19580@gmail.com \
 		-version "$(VERSION)" \
 		-author=hankhill19580@gmail.com \
 		-autostart=true \
-		-clientname=brb \
+		-clientname=brb-$(GOOS)
 		-consolename="BRB Chat" \
 		-consoleurl="http://127.0.0.1:7669" \
 		-command="brb -dir \$$PLUGIN/lib -eris=true -i2psite=true" \
@@ -125,34 +139,11 @@ plugin-linux: clean linux
 		-delaystart="3" \
 		-icondata=icon/icon.png \
 		-desc="`cat ircdesc`" \
-		-exename=brb \
+		-exename=brb-$(GOOS)
 		-license=MIT \
 		-res="tmp/res/"
-	cp -v brb.su3 ../brb-linux.su3
-	cp -v ../brb-linux.su3 .
-	unzip -o brb.zip -d brb-zip
-
-plugin-windows: clean windows-runner
-	i2p.plugin.native -name=brb \
-		-signer=hankhill19580@gmail.com \
-		-version "$(VERSION)" \
-		-author=hankhill19580@gmail.com \
-		-autostart=true \
-		-clientname=brb.exe \
-		-consolename="BRB Chat" \
-		-consoleurl="http://127.0.0.1:7669" \
-		-command="brb.exe -dir \$$PLUGIN/lib -eris=true -i2psite=true" \
-		-consolename="BRB IRC" \
-		-delaystart="3" \
-		-desc="`cat ircdesc`" \
-		-icondata=icon/icon.png \
-		-exename=brb.exe \
-		-license=MIT \
-		-targetos="windows" \
-		-res=windll
-	cp -v brb.su3 ../brb-windows.su3
-	cp -v ../brb-windows.su3 .
-	unzip -o brb.zip -d brb-zip-win
+	cp -v ../brb-$(GOOS).su3 .
+	unzip -o brb-$(GOOS).zip -d brb-$(GOOS)-zip
 
 export sumbblinux=`sha256sum "../brb-linux.su3"`
 export sumbbwindows=`sha256sum "../brb-windows.su3"`
