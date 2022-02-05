@@ -9,7 +9,7 @@ their application, then wrap it up in the interface I happen to think
 was the most logical. This adds a few very simple things to Dispatch
 to make it suitable for use as a user-friendly I2P IRC client.
 
-BRB also wraps up an IRC server, based on the one found in *[prologic/eris](https://github.com/prologic/eris).*
+BRB also wraps up an IRC server, based on the one found in *[prologic/eris](https://git.mills.io/prologic/eris).*
 This makes it useful as a sort of ad-hoc anonymous groupchat system. Again,
 many thanks to prologic and the other people who have worked on Eris. Eris
 will be configured to listen on an I2P "SAM" connection, just like Dispatch,
