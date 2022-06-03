@@ -19,13 +19,13 @@ run:
 # get the date
 DAILY=$(date +%Y%m%d)
 daily:
-	gothub release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(DAILY) -d "version $(DAILY)"
+	github-release release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(DAILY) -d "version $(DAILY)"
 
 version:
-	gothub release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION) -d "version $(VERSION)"
+	github-release release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION) -d "version $(VERSION)"
 
 del:
-	gothub delete -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION)
+	github-release delete -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION)
 
 tar:
 	tar --exclude .git \
@@ -54,26 +54,26 @@ sumdroid=`sha256sum ./android/app/build/outputs/apk/release/app-release.apk`
 sumdarwin=`sha256sum $(packagename)-darwin`
 
 upload-windows:
-	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumwindows)" -n "$(packagename).exe" -f "$(packagename).exe"
+	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumwindows)" -n "$(packagename).exe" -f "$(packagename).exe"
 
 upload-windows-daily:
-	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(DAILY) -l "$(sumwindows)" -n "$(packagename).exe" -f "$(packagename).exe"
+	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(DAILY) -l "$(sumwindows)" -n "$(packagename).exe" -f "$(packagename).exe"
 
 upload-darwin:
-	#gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumdarwin)" -n "$(packagename)-darwin" -f "$(packagename)-darwin"
+	#github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumdarwin)" -n "$(packagename)-darwin" -f "$(packagename)-darwin"
 
 upload-linux:
-	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumlinux)" -n "$(packagename)" -f "$(packagename)"
+	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumlinux)" -n "$(packagename)" -f "$(packagename)"
 
 release-android:
-	gothub release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION)-$(testing) -d "version $(VERSION)"
+	github-release release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION)-$(testing) -d "version $(VERSION)"
 
 upload-android:
-	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION)-$(testing) -l "$(sumdroid)" -n "$(packagename).apk" -f "./android/app/build/outputs/apk/release/app-release.apk"
+	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION)-$(testing) -l "$(sumdroid)" -n "$(packagename).apk" -f "./android/app/build/outputs/apk/release/app-release.apk"
 
 upload-plugins:
-	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbblinux)" -n "brb-linux.su3" -f "../brb-linux.su3"
-	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbbwindows)" -n "brb-windows.su3" -f "../brb-windows.su3"
+	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbblinux)" -n "brb-linux.su3" -f "../brb-linux.su3"
+	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbbwindows)" -n "brb-windows.su3" -f "../brb-windows.su3"
 
 upload: upload-windows upload-darwin upload-linux release-android upload-android upload-plugins
 
