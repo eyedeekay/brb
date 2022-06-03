@@ -305,8 +305,8 @@ github.com/eyedeekay/sam3 v0.33.2/go.mod h1:sPtlI4cRm7wD0UywOzLPvvdY1G++vBSK3n+j
 github.com/eyedeekay/sam3 v0.33.3-0.20220601222524-ee9930813dc1 h1:ufqFOqTMD2MCoalkJXkql24QcwCYLnd/zG2dEJ7DN/U=
 github.com/eyedeekay/sam3 v0.33.3-0.20220601222524-ee9930813dc1/go.mod h1:sPtlI4cRm7wD0UywOzLPvvdY1G++vBSK3n+jiIGqWlU=
 github.com/eyedeekay/samtracker v0.0.0-20210201174310-55c3321622e1/go.mod h1:UqmYL7AU1N8kWO13JKIJL2ca4CMctHThJZkxDNOIDB4=
-github.com/eyedeekay/toopie.html v0.0.0-20201129001559-54654990ffb9 h1:PHIvPpPFIqg1IzLmHTB4GDlbPOYASNdJw8f7V2WPsZk=
-github.com/eyedeekay/toopie.html v0.0.0-20201129001559-54654990ffb9/go.mod h1:w6SQxKIGQ8ZRORwwbfezQr0JhojOuzcZ33VYfqBkhEM=
+github.com/eyedeekay/toopie.html v0.0.0-20220603233857-ee89e9b03344 h1:Oq5Lu88DtQH4VXclpFh7Cz/Y/nPGX2MzUtJr/488pwQ=
+github.com/eyedeekay/toopie.html v0.0.0-20220603233857-ee89e9b03344/go.mod h1:nStwGUzvDDRJppWpc0oXA+M41ursGtY9jj+BhTHv1GA=
 github.com/facebookgo/ensure v0.0.0-20160127193407-b4ab57deab51/go.mod h1:Yg+htXGokKKdzcwhuNDwVvN+uBxDGXJ7G/VN1d8fa64=
 github.com/facebookgo/ensure v0.0.0-20200202191622-63f1cf65ac4c h1:8ISkoahWXwZR41ois5lSJBSVw4D0OV19Ht/JSTzvSv0=
 github.com/facebookgo/ensure v0.0.0-20200202191622-63f1cf65ac4c/go.mod h1:Yg+htXGokKKdzcwhuNDwVvN+uBxDGXJ7G/VN1d8fa64=
