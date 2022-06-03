@@ -21,3 +21,6 @@ android/signing.properties
 *.crl
 *.crt
 *.pem
+
+android/app/libs/brb-sources.jar
+android/brb/brb-sources.jar

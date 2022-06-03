@@ -18,7 +18,7 @@ import (
 	"github.com/eyedeekay/goSam"
 	"github.com/eyedeekay/toopie.html/lib"
 	"github.com/getlantern/go-socks5"
-	"github.com/getlantern/systray"
+	"fyne.io/systray"
 	"github.com/janosgyerik/portping"
 	"github.com/webview/webview"
 	"github.com/zserge/lorca"
