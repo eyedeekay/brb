@@ -9,7 +9,6 @@ import (
 	"os/exec"
 	"os/signal"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"time"
 
@@ -22,7 +21,6 @@ import (
 	"github.com/janosgyerik/portping"
 
 	webview "github.com/jchv/go-webview-selector"
-	"github.com/zserge/lorca"
 	trayirc "i2pgit.org/idk/libbrb"
 )
 
@@ -160,78 +158,32 @@ func main() {
 		os.Setenv("NO_PROXY", "localhost:7669,127.0.0.1:7669")
 
 		if *local {
-			if runtime.GOOS != "windows" {
-				var w webview.WebView
-				w = webview.New(*debug)
-				defer w.Destroy()
-				w.SetTitle("brb")
-				w.SetSize(800, 600, webview.HintNone)
-				log.Println("Reaching self-hosted IRC server", brb.OutputAutoLink())
-				w.Navigate(brb.OutputAutoLink())
-				w.Run()
-			} else if *forcewebview {
-				var w webview.WebView
-				w = webview.New(*debug)
-				defer w.Destroy()
-				w.SetTitle("brb")
-				w.SetSize(800, 600, webview.HintNone)
-				w.Navigate(brb.OutputAutoLink())
-				w.Run()
-			} else {
-				ui, err := lorca.New(brb.OutputAutoLink(), "", 480, 320)
-				if err != nil {
-					log.Fatal(err)
-				}
-				defer ui.Close()
-				// Wait until UI window is closed
-				<-ui.Done()
-			}
-		} else {
-			if runtime.GOOS != "windows" {
-				var w webview.WebView
-				w = webview.New(*debug)
-				defer w.Destroy()
-				w.SetTitle("brb")
-				w.SetSize(800, 600, webview.HintNone)
-				w.Navigate("http://127.0.0.1:7669/connect")
-				w.Run()
-			} else if *forcewebview {
-				var w webview.WebView
-				w = webview.New(*debug)
-				defer w.Destroy()
-				w.SetTitle("brb")
-				w.SetSize(800, 600, webview.HintNone)
-				w.Navigate("http://127.0.0.1:7669/connect")
-				w.Run()
-			} else {
-				ui, err := lorca.New("http://127.0.0.1:7669/connect", "", 800, 600)
-				if err != nil {
-					log.Fatal(err)
-				}
-				defer ui.Close()
-				// Wait until UI window is closed
-				<-ui.Done()
-			}
-		}
-
-	} else if *monitor {
-		if runtime.GOOS != "windows" {
 			var w webview.WebView
 			w = webview.New(*debug)
 			defer w.Destroy()
 			w.SetTitle("brb")
 			w.SetSize(800, 600, webview.HintNone)
-			w.Navigate(fmt.Sprintf("http://%s", "127.0.0.1:7667"))
+			log.Println("Reaching self-hosted IRC server", brb.OutputAutoLink())
+			w.Navigate(brb.OutputAutoLink())
 			w.Run()
 		} else {
-			ui, err := lorca.New(fmt.Sprintf("http://%s", "127.0.0.1:7667"), "", 800, 600)
-			if err != nil {
-				log.Fatal(err)
-			}
-			defer ui.Close()
-			// Wait until UI window is closed
-			<-ui.Done()
+			var w webview.WebView
+			w = webview.New(*debug)
+			defer w.Destroy()
+			w.SetTitle("brb")
+			w.SetSize(800, 600, webview.HintNone)
+			w.Navigate("http://127.0.0.1:7669/connect")
+			w.Run()
 		}
+
+	} else if *monitor {
+		var w webview.WebView
+		w = webview.New(*debug)
+		defer w.Destroy()
+		w.SetTitle("brb")
+		w.SetSize(800, 600, webview.HintNone)
+		w.Navigate(fmt.Sprintf("http://%s", "127.0.0.1:7667"))
+		w.Run()
 	} else {
 		if *monitor {
 			if err := portping.Ping("127.0.0.1", "7667", time.Second); err != nil {
