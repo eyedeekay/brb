@@ -108,13 +108,6 @@ plugins: plugin-linux plugin-windows
 
 jarstmp:
 	mkdir -p tmp/res/lib
-	make tmp/res/lib/WebView2Loader.dll tmp/res/lib/webview.dll
-
-tmp/res/lib/WebView2Loader.dll:
-	wget -O tmp/res/lib/WebView2Loader.dll https://github.com/webview/webview/raw/master/dll/x64/WebView2Loader.dll
-
-tmp/res/lib/webview.dll:
-	wget -O tmp/res/lib/webview.dll https://github.com/webview/webview/raw/master/dll/x64/webview.dll
 
 plugins: jarstmp plugin-linux plugin-windows
 
