@@ -295,8 +295,8 @@ github.com/eyedeekay/sam-forwarder v0.32.1-0.20191021175341-aa52be69ffe8/go.mod 
 github.com/eyedeekay/sam-forwarder v0.32.2-0.20210206025830-529a5f77cbb9/go.mod h1:+94hmW7SUHtwTQcIABwc4f8NTCGPhglYFrZAzKLIwrg=
 github.com/eyedeekay/sam-forwarder v0.32.2-0.20220603033253-9c0b2adb95b5/go.mod h1:WNDqiMmkqf8iqeX4wFKdORRXdV90bOcbRhlVsepTLV0=
 github.com/eyedeekay/sam-forwarder v0.32.2-0.20220603202605-9a46feacc370/go.mod h1:/FX9jyxCKjmnLxcm7mRbI0wvDdjY08YmvRFvrFopZHY=
-github.com/eyedeekay/sam-forwarder v0.32.2-0.20220603211822-949c7c733dcf h1:heKMoGYRsTqvjEA8Kr8iLnyiMGhmOR3cpfJvTJFvjYU=
-github.com/eyedeekay/sam-forwarder v0.32.2-0.20220603211822-949c7c733dcf/go.mod h1:dQ2vdBnL7tDwpumUCgN2WwvaDb1bK3zxOBhw/iiGT5Y=
+github.com/eyedeekay/sam-forwarder v0.32.2-0.20220603233215-94e7be5c7f7c h1:uFuqVC5idGGOTWIm+9hCeof7JgQOWMXa+oSWds06y5s=
+github.com/eyedeekay/sam-forwarder v0.32.2-0.20220603233215-94e7be5c7f7c/go.mod h1:hccqaYyFXC/flv4CFWT+xjwgXd0kOKb1iYP2KZPdgyA=
 github.com/eyedeekay/sam3 v0.0.0-20190613034117-99ad6522ebe3/go.mod h1:Vrxh+71E3HVYqyRlT5Jg+E26sSuu8UNTLB4p8qyT408=
 github.com/eyedeekay/sam3 v0.0.0-20190730185140-f8d54526ea25/go.mod h1:Y3igFVzN4ybqkkpfUWULGhw7WRp8lieq0ORXbLBbcZM=
 github.com/eyedeekay/sam3 v0.32.1/go.mod h1:Y3igFVzN4ybqkkpfUWULGhw7WRp8lieq0ORXbLBbcZM=
@@ -922,7 +922,6 @@ github.com/zieckey/goini v0.0.0-20180118150432-0da17d361d26 h1:E0lEWrifmR0ACbGf5
 github.com/zieckey/goini v0.0.0-20180118150432-0da17d361d26/go.mod h1:TQpdgg7I9+PFIkatlx/dnZyZb4iZyCUx1HJj4rXi3+E=
 github.com/zserge/lorca v0.1.8/go.mod h1:gTrVdXKyWxNhc8aUb1Uu3s0mY343arR1T6jUtxmBxR8=
 github.com/zserge/lorca v0.1.9/go.mod h1:bVmnIbIRlOcoV285KIRSe4bUABKi7R7384Ycuum6e4A=
-github.com/zserge/lorca v0.1.10 h1:f/xBJ3D3ipcVRCcvN8XqZnpoKcOXV8I4vwqlFyw7ruc=
 github.com/zserge/lorca v0.1.10/go.mod h1:bVmnIbIRlOcoV285KIRSe4bUABKi7R7384Ycuum6e4A=
 github.com/zserge/webview v0.0.0-20190123072648-16c93bcaeaeb/go.mod h1:a1CV8KR4Dd1eP2g+mEijGOp+HKczwdKHWyx0aPHKvo4=
 gitlab.com/golang-commonmark/html v0.0.0-20180917080848-cfaf75183c4a/go.mod h1:JT4uoTz0tfPoyVH88GZoWDNm5NHJI2VbUW+eyPClueI=
@@ -1559,8 +1558,8 @@ honnef.co/go/tools v0.0.1-2019.2.3/go.mod h1:a3bituU0lyd329TUQxRnasdCoJDkEUEAqEt
 honnef.co/go/tools v0.0.1-2020.1.3/go.mod h1:X/FiERA/W4tHapMX5mGpAtMSVEeEUOyHaw9vFzvIQ3k=
 honnef.co/go/tools v0.0.1-2020.1.4/go.mod h1:X/FiERA/W4tHapMX5mGpAtMSVEeEUOyHaw9vFzvIQ3k=
 honnef.co/go/tools v0.0.1-2020.1.6/go.mod h1:pyyisuGw24ruLjrr1ddx39WE0y9OooInRzEYLhQB2YY=
-i2pgit.org/idk/libbrb v0.0.0-20220603222150-84751ed17615 h1:3CM7/9T6819IyL+NQp9R+biUgdJNaFUMs+OZgh70yW8=
-i2pgit.org/idk/libbrb v0.0.0-20220603222150-84751ed17615/go.mod h1:fRVYddlLQyyvTCehODIWAu3jt3QBKjKL/eWyVwVmF7k=
+i2pgit.org/idk/libbrb v0.0.0-20220603233314-cbdd1ea826be h1:f/ghS/H85SygrOmP1FZaJAkAOgXXSZIJnR3CtAHj+OA=
+i2pgit.org/idk/libbrb v0.0.0-20220603233314-cbdd1ea826be/go.mod h1:BHbIuTTiu0a1l/9WQv3esgQ5FTSaBvHl5DpTDdXl5lI=
 i2pgit.org/idk/terrarium v1.13.1-0.20220603194750-867ca0560dea h1:VPGavWRMfCWssD5JtlJqtJinOzhqLlOcflNWjOg1/kQ=
 i2pgit.org/idk/terrarium v1.13.1-0.20220603194750-867ca0560dea/go.mod h1:sAK46qTU0gF+lANwr/c6Wcrbjp/hZlMagOWRiJAL7Ks=
 rsc.io/binaryregexp v0.2.0/go.mod h1:qTv7/COck+e2FymRvadv62gMdZztPaShugOCi3I+8D8=

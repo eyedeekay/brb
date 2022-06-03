@@ -12,8 +12,7 @@ require (
 	github.com/jchv/go-webview-selector v0.0.0-20220126075917-13df59bce3cf
 	github.com/jchv/go-webview2 v0.0.0-20220506072306-ae3fc72a5edd // indirect
 	github.com/jchv/go-winloader v0.0.0-20210711035445-715c2860da7e // indirect
-	github.com/zserge/lorca v0.1.10
-	i2pgit.org/idk/libbrb v0.0.0-20220603222150-84751ed17615
+	i2pgit.org/idk/libbrb v0.0.0-20220603233314-cbdd1ea826be
 )
 
 replace github.com/willf/bitset => github.com/bits-and-blooms/bitset v1.1.10
