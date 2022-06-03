@@ -33,11 +33,8 @@ all: windows osx linux plugins droid
 
 windows-runner: fmt
 	CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-windows.exe
-	2goarray BRB main < brb.exe > installer/brb.go
 
 windows: windows-runner
-	#CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-installer.exe ./installer
-	#CC=i686-w64-mingw32-gcc-win32 CGO_ENABLED=1 GOOS=windows GOARCG=i386 go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-32.exe
 
 osx: fmt
 	#GOARCH=386 GOOS=darwin go build $(GO_COMPILER_OPTS) -o $(packagename)-darwin-386
@@ -47,14 +44,12 @@ linux: fmt
 	GOOS=linux go build $(GO_COMPILER_OPTS) -o $(packagename)
 
 sumwindows=`sha256sum $(packagename).exe`
-sumwindowsi=`sha256sum $(packagename)-installer.exe`
 sumlinux=`sha256sum $(packagename)`
 sumdroid=`sha256sum ./android/app/build/outputs/apk/release/app-release.apk`
 sumdarwin=`sha256sum $(packagename)-darwin`
 
 upload-windows:
 	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumwindows)" -n "$(packagename).exe" -f "$(packagename).exe"
-	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumwindowsi)" -n "$(packagename)-installer.exe" -f "$(packagename)-installer.exe"
 
 upload-darwin:
 	#gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumdarwin)" -n "$(packagename)-darwin" -f "$(packagename)-darwin"
