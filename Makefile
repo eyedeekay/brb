@@ -48,7 +48,7 @@ osx: fmt
 linux: fmt
 	GOOS=linux go build $(GO_COMPILER_OPTS) -o $(packagename)
 
-sumwindows=`sha256sum $(packagename).exe`
+sumwindows=`sha256sum $(packagename)-windows.exe`
 sumlinux=`sha256sum $(packagename)`
 sumdroid=`sha256sum ./android/app/build/outputs/apk/release/app-release.apk`
 sumdarwin=`sha256sum $(packagename)-darwin`
