@@ -16,8 +16,15 @@ echo:
 run:
 	go build && ./brb
 
+# get the date
+DAILY=$(date +%Y%m%d)
+daily:
+	gothub release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(DAILY) -d "version $(DAILY)"
+
 version:
 	gothub release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION) -d "version $(VERSION)"
+
+
 
 del:
 	gothub delete -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION)
@@ -50,6 +57,9 @@ sumdarwin=`sha256sum $(packagename)-darwin`
 
 upload-windows:
 	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumwindows)" -n "$(packagename).exe" -f "$(packagename).exe"
+
+upload-windows-daily:
+	gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(DAILY) -l "$(sumwindows)" -n "$(packagename).exe" -f "$(packagename).exe"
 
 upload-darwin:
 	#gothub upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumdarwin)" -n "$(packagename)-darwin" -f "$(packagename)-darwin"
