@@ -14,9 +14,6 @@ require (
 	i2pgit.org/idk/libbrb v0.0.0-20220603222150-84751ed17615
 )
 
-//replace github.com/prologic/eris => github.com/prologic/eris v1.6.7-0.20210430033226-64d4acc46ca7
-//replace github.com/prologic/eris => git.mills.io/prologic/eris v1.6.7-0.20210430033226-64d4acc46ca7
-
 replace github.com/willf/bitset => github.com/bits-and-blooms/bitset v1.1.10
 
 replace github.com/caddyserver/certmagic => github.com/caddyserver/certmagic v0.11.2
