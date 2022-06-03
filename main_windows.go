@@ -1,6 +1,3 @@
-//go:build !windows
-// +build !windows
-
 package main
 
 import (
@@ -20,12 +17,12 @@ import (
 	"github.com/atotto/clipboard"
 	"github.com/eyedeekay/brb/icon"
 	"github.com/eyedeekay/goSam"
-	toopie "github.com/eyedeekay/toopie.html/lib"
+	"github.com/eyedeekay/toopie.html/lib"
 	"github.com/getlantern/go-socks5"
 	"github.com/janosgyerik/portping"
-	"github.com/webview/webview"
+	"github.com/jchv/go-webview2"
 	"github.com/zserge/lorca"
-	trayirc "i2pgit.org/idk/libbrb"
+	"i2pgit.org/idk/libbrb"
 )
 
 var usage = `Blue Rubber Band
