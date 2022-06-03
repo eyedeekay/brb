@@ -108,7 +108,6 @@ plugins: plugin-linux plugin-windows
 
 jarstmp:
 	mkdir -p tmp/res/lib
-	cp -v $(HOME)/Workspace/GIT_WORK/i2p.i2p/build/shellservice.jar tmp/res/lib/
 	make tmp/res/lib/WebView2Loader.dll tmp/res/lib/webview.dll
 
 tmp/res/lib/WebView2Loader.dll:
