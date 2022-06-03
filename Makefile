@@ -54,10 +54,10 @@ sumdroid=`sha256sum ./android/app/build/outputs/apk/release/app-release.apk`
 sumdarwin=`sha256sum $(packagename)-darwin`
 
 upload-windows:
-	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumwindows)" -n "$(packagename).exe" -f "$(packagename).exe"
+	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumwindows)" -n "$(packagename)-windows.exe" -f "$(packagename)-windows.exe"
 
 upload-windows-daily:
-	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(DAILY) -l "$(sumwindows)" -n "$(packagename).exe" -f "$(packagename).exe"
+	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(DAILY) -l "$(sumwindows)" -n "$(packagename)-windows.exe" -f "$(packagename)-windows.exe"
 
 upload-darwin:
 	#github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumdarwin)" -n "$(packagename)-darwin" -f "$(packagename)-darwin"
