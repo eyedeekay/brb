@@ -1,6 +1,3 @@
-//go:build !windows
-// +build !windows
-
 package main
 
 import (
@@ -23,7 +20,8 @@ import (
 	toopie "github.com/eyedeekay/toopie.html/lib"
 	"github.com/getlantern/go-socks5"
 	"github.com/janosgyerik/portping"
-	"github.com/webview/webview"
+
+	webview "github.com/jchv/go-webview-selector"
 	"github.com/zserge/lorca"
 	trayirc "i2pgit.org/idk/libbrb"
 )

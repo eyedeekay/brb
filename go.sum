@@ -556,10 +556,14 @@ github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANyt
 github.com/janosgyerik/portping v1.0.1 h1:zDst8djS694ldhfs5COQYjc2fXZWarZ8rHKOL15vU8E=
 github.com/janosgyerik/portping v1.0.1/go.mod h1:CQ4mzAth8ZrOBklptItRI4xUJFj9TaOYg0lwf3WMeNA=
 github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99/go.mod h1:1lJo3i6rXxKeerYnT8Nvf0QmHCRC1n8sfWVwXF2Frvo=
+github.com/jchv/go-webview-selector v0.0.0-20220126075917-13df59bce3cf h1:LfCNdIjo0pYj7ChAEkRZKPW/GKOzQLGqz/8CbDTxBvE=
+github.com/jchv/go-webview-selector v0.0.0-20220126075917-13df59bce3cf/go.mod h1:RfUO9QcPUZ27qVS+rq9SYhhjsVNiolWwaIQdNjqFUsQ=
+github.com/jchv/go-webview2 v0.0.0-20220126073738-2ea27096a5eb/go.mod h1:/BNVc0Sw3Wj6Sz9uSxPwhCEUhhWs92hPde75K2YV24A=
 github.com/jchv/go-webview2 v0.0.0-20220506072306-ae3fc72a5edd h1:X7LO1jvBMIEQahBDJ8XljoFR56uuC/exJ+4DWIFik9U=
 github.com/jchv/go-webview2 v0.0.0-20220506072306-ae3fc72a5edd/go.mod h1:/BNVc0Sw3Wj6Sz9uSxPwhCEUhhWs92hPde75K2YV24A=
-github.com/jchv/go-winloader v0.0.0-20200815041850-dec1ee9a7fd5 h1:pdFFlHXY9tZXmJz+tRSm1DzYEH4ebha7cffmm607bMU=
 github.com/jchv/go-winloader v0.0.0-20200815041850-dec1ee9a7fd5/go.mod h1:alcuEEnZsY1WQsagKhZDsoPCRoOijYqhZvPwLG0kzVs=
+github.com/jchv/go-winloader v0.0.0-20210711035445-715c2860da7e h1:Q3+PugElBCf4PFpxhErSzU3/PY5sFL5Z6rfv4AbGAck=
+github.com/jchv/go-winloader v0.0.0-20210711035445-715c2860da7e/go.mod h1:alcuEEnZsY1WQsagKhZDsoPCRoOijYqhZvPwLG0kzVs=
 github.com/jessevdk/go-flags v1.4.0/go.mod h1:4FA24M0QyGHXBuZZK/XkWh8h0e1EYbRYJSGM75WSRxI=
 github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af/go.mod h1:Nht3zPeWKUH0NzdCt2Blrr5ys8VGpn0CEB0cQHVjt7k=
 github.com/jmespath/go-jmespath v0.3.0/go.mod h1:9QtRXoHjLGCJ5IBSaohpXITPlowMeeYCZ7fLUTSywik=
