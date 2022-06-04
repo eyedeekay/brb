@@ -17,7 +17,7 @@ run:
 	go build && ./brb
 
 # get the date
-DAILY=$(date +%Y%m%d)
+DAILY?=$(date +%Y%m%d)
 daily:
 	github-release release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(DAILY) -d "version $(DAILY)"
 
