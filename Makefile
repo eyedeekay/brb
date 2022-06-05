@@ -101,6 +101,7 @@ droid: droidjar
 
 clean:
 	rm -f brb brb.exe brb.aar brb-installer.exe brb-sources.jar
+	git clean -fd
 
 index:
 	@echo "<!DOCTYPE html>" > index.html
