@@ -126,10 +126,10 @@ jarstmp:
 
 plugins: jarstmp plugin-linux plugin-windows
 
-plugin-linux: clean linux
+plugin-linux: linux
 	GOOS=linux make plugin
 
-plugin-windows: clean windows-runner
+plugin-windows: windows-runner
 	GOOS=windows make plugin
 
 SIGNER_DIR=$(HOME)/i2p-go-keys/
