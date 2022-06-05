@@ -82,7 +82,7 @@ download-su3s:
 download-single-su3:
 	wget-ds "https://github.com/$(USER_GH)/$(packagename)/releases/download/$(VERSION)/$(packagename)-$(GOOS).su3"
 
-upload: upload-windows upload-darwin upload-linux release-android upload-android upload-plugins
+upload: upload-windows upload-darwin upload-linux upload-plugins
 
 release: version upload
 
