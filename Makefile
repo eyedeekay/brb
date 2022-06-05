@@ -37,7 +37,7 @@ tar:
 all: windows osx linux plugins droid
 
 windows-runner: fmt
-	CC=x86_64-w64-mingw32-gcc-win32 CGO_ENABLED=0 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-windows.exe
+	CGO_ENABLED=0 GOOS=windows go build $(WIN_GO_COMPILER_OPTS) -o $(packagename)-windows.exe
 
 windows: windows-runner
 
