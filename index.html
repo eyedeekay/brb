@@ -7,25 +7,32 @@
 <body>
 <h1>brb</h1>
 
-<p>Blue Rubber Band is mostly nothing except an application which
-<em>automatically</em> configures an Internet Relay Chat client for use
-with the I2P network. The actual IRC client is <em><a href="https://github.com/khlieng/dispatch">khlieng/dispatch</a></em>
+<p><em>A pseudonymous software for groupchat based on IRC.</em></p>
+
+<p><strong>BRB incoroporates:</strong></p>
+
+<p>An IRC Client - The actual IRC client is <em><a href="https://github.com/khlieng/dispatch">khlieng/dispatch</a></em>
 and they deserve most of the credit! All I did was add I2P support to
 their application, then wrap it up in the interface I happen to think
-was the most logical. This adds a few very simple things to Dispatch
-to make it suitable for use as a user-friendly I2P IRC client.</p>
+was the most logical. In it's most basic use-case, it's an easy-to-use
+modern client to the Irc2P network or any in-I2P IRC server.</p>
 
-<p>BRB also wraps up an IRC server, based on the one found in <em><a href="https://git.mills.io/prologic/eris">prologic/eris</a>.</em>
-This makes it useful as a sort of ad-hoc anonymous groupchat system. Again,
-many thanks to prologic and the other people who have worked on Eris. Eris
-will be configured to listen on an I2P "SAM" connection, just like Dispatch,
-so all the configuration is automatic.</p>
+<p>Dispatch is the reason I call the client "Blue Rubber Band," because print newspapers
+are often called "Dispatches" and in the US are frequently "Bound" in thin blue rubber
+bands.</p>
+
+<p>BRB also wraps up an IRC server, using <em><a href="https://i2pgit.org/idk/terrarium">terrarium</a></em>,
+a spin-off of another IRC server called <em><a href="https://github.com/horgh/catbox">horgh/catbox</a></em>,
+which I picked because it had relatively few features and a simple, self-contained
+implementation. In older versions it used an IRC server called <em><a href="https://git.mills.io/prologic/eris">prologic/eris</a></em>
+which also has easy-to-setup I2P support.</p>
 
 <p>Lastly, using <a href="https://github.com/eyedeekay/sam-forwarder">eyedeekay/sam-forwarder</a>,
-the WebIRC interface provided by <em>Dispatch</em>. In this way the Dispatch WebUI, which
-is capable of supporting multiple users at the same time, becomes available as an
-I2P Site. Other I2P users can access the WebUI and use it as a WebIRC client to any
-in-I2P IRC network.</p>
+the WebIRC interface provided by <em>Dispatch</em> is then forwarded back to the I2P network
+as an I2P Site. In this way, anyone who connects to your Dispatch interface over I2P
+can chat with you or others without the conversation leaving the server hosting the
+<em>Dispatch/Terrarium</em> combination instance. When used in this way, it could act as an
+anonymous replacement for something like Slack or Discord.</p>
 
 <p>In addition to that, it sets up:</p>
 
@@ -42,13 +49,7 @@ HTTP proxy, <em>except</em> for traffic which is destined for the dispatch
 IRC client. This makes it capable of browsing I2P sites. It is
 <strong>not reccommended</strong> that you use this feature for general I2P browsing,
 but it should be ok for opening links from parties <strong>who you trust</strong> to
-give you the link. <strong>On Windows</strong> the webUI is provided by
-<a href="https://github.com/zserge/lorca">zserge/lorca</a> due to bugs Webview on
-Windows. This requires Chrome or Chromium to be installed. If it is not
-installed, lorca will prompt you to install it. Lorca configures Chromium
-to minimize Google telemetry, and requests away from the Dispatch client
-will still be proxied to the I2P network. This is also <strong>not recommended</strong>
-for use as a general I2P browser. &lt;&lt;</li>
+give you the link.</li>
 <li><strong>An I2P Diagnostic View:</strong> using the <a href="https://geti2p.net/en/docs/api/i2pcontrol">I2PControl API</a>
 we connect to I2P to gather information about it's readiness in another
 webview.</li>

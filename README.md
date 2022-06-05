@@ -1,25 +1,32 @@
 brb
 ===
 
-Blue Rubber Band is mostly nothing except an application which
-*automatically* configures an Internet Relay Chat client for use
-with the I2P network. The actual IRC client is *[khlieng/dispatch](https://github.com/khlieng/dispatch)*
+*A pseudonymous software for groupchat based on IRC.*
+
+**BRB incoroporates:**
+
+An IRC Client - The actual IRC client is *[khlieng/dispatch](https://github.com/khlieng/dispatch)*
 and they deserve most of the credit! All I did was add I2P support to
 their application, then wrap it up in the interface I happen to think
-was the most logical. This adds a few very simple things to Dispatch
-to make it suitable for use as a user-friendly I2P IRC client.
+was the most logical. In it's most basic use-case, it's an easy-to-use
+modern client to the Irc2P network or any in-I2P IRC server.
 
-BRB also wraps up an IRC server, based on the one found in *[prologic/eris](https://git.mills.io/prologic/eris).*
-This makes it useful as a sort of ad-hoc anonymous groupchat system. Again,
-many thanks to prologic and the other people who have worked on Eris. Eris
-will be configured to listen on an I2P "SAM" connection, just like Dispatch,
-so all the configuration is automatic.
+Dispatch is the reason I call the client "Blue Rubber Band," because print newspapers
+are often called "Dispatches" and in the US are frequently "Bound" in thin blue rubber
+bands.
+
+BRB also wraps up an IRC server, using *[terrarium](https://i2pgit.org/idk/terrarium)*,
+a spin-off of another IRC server called *[horgh/catbox](https://github.com/horgh/catbox)*,
+which I picked because it had relatively few features and a simple, self-contained
+implementation. In older versions it used an IRC server called *[prologic/eris](https://git.mills.io/prologic/eris)*
+which also has easy-to-setup I2P support.
 
 Lastly, using [eyedeekay/sam-forwarder](https://github.com/eyedeekay/sam-forwarder),
-the WebIRC interface provided by *Dispatch*. In this way the Dispatch WebUI, which
-is capable of supporting multiple users at the same time, becomes available as an
-I2P Site. Other I2P users can access the WebUI and use it as a WebIRC client to any
-in-I2P IRC network.
+the WebIRC interface provided by *Dispatch* is then forwarded back to the I2P network
+as an I2P Site. In this way, anyone who connects to your Dispatch interface over I2P
+can chat with you or others without the conversation leaving the server hosting the
+*Dispatch/Terrarium* combination instance. When used in this way, it could act as an
+anonymous replacement for something like Slack or Discord.
 
 In addition to that, it sets up:
 
@@ -35,13 +42,7 @@ In addition to that, it sets up:
   IRC client. This makes it capable of browsing I2P sites. It is
   **not reccommended** that you use this feature for general I2P browsing,
   but it should be ok for opening links from parties **who you trust** to
-  give you the link. **On Windows** the webUI is provided by
-  [zserge/lorca](https://github.com/zserge/lorca) due to bugs Webview on
-  Windows. This requires Chrome or Chromium to be installed. If it is not
-  installed, lorca will prompt you to install it. Lorca configures Chromium
-  to minimize Google telemetry, and requests away from the Dispatch client
-  will still be proxied to the I2P network. This is also **not recommended**
-  for use as a general I2P browser. <<
+  give you the link.
  4. **An I2P Diagnostic View:** using the [I2PControl API](https://geti2p.net/en/docs/api/i2pcontrol)
   we connect to I2P to gather information about it's readiness in another
   webview.
@@ -72,8 +73,6 @@ brb uses the SAM API to set up it's connection to IRC networks inside of I2P.
 This means that it can support as many IRC networks as you want to connect to.
 With i2pd, the SAM API is already enabled. With Java I2P, you must enable it
 on the [Config Clients](http://localhost:7657/configclients) page.
-
-
 
   >> `If you do not want to use either the WebView or Chromium to wrap the
   user-interface, you can instead use any web browser and direct it to
