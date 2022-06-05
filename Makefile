@@ -71,9 +71,13 @@ release-android:
 upload-android:
 	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION)-$(testing) -l "$(sumdroid)" -n "$(packagename).apk" -f "./android/app/build/outputs/apk/release/app-release.apk"
 
-upload-plugins:
-	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbblinux)" -n "brb-linux.su3" -f "../brb-linux.su3"
-	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbbwindows)" -n "brb-windows.su3" -f "../brb-windows.su3"
+upload-plugins: upload-plugin-linux upload-plugin-windows
+
+upload-plugin-linux:
+	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbblinux)" -n "brb-linux.su3" -f "./brb-linux.su3"
+
+upload-plugin-windows:
+	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbbwindows)" -n "brb-windows.su3" -f "./brb-windows.su3"
 
 download-su3s:
 	GOOS=windows make download-single-su3
@@ -152,6 +156,6 @@ plugin:
 		-license=MIT \
 		-res=tmp/
 
-export sumbblinux=`sha256sum "../brb-linux.su3"`
-export sumbbwindows=`sha256sum "../brb-windows.su3"`
+export sumbblinux=`sha256sum "./brb-linux.su3"`
+export sumbbwindows=`sha256sum "./brb-windows.su3"`
 
