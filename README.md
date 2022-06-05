@@ -30,6 +30,8 @@ anonymous replacement for something like Slack or Discord.
 
 In addition to that, it sets up:
 
+![BRB screenshot](screenshot.png)
+
  1. **A taskbar icon:** using the [getlantern/systray](https://github.com/getlantern/systray)
   library and an accompanying menu, which can be used to launch the IRC client interface.
  2. **A menu** clicking the taskbar icon will open the menu, which presents
@@ -46,8 +48,6 @@ In addition to that, it sets up:
  4. **An I2P Diagnostic View:** using the [I2PControl API](https://geti2p.net/en/docs/api/i2pcontrol)
   we connect to I2P to gather information about it's readiness in another
   webview.
-
-![BRB screenshot](screenshot.png)
 
 The result is a Modern-looking, no fuss Irc2P Client.
 

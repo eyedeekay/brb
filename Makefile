@@ -22,7 +22,7 @@ daily:
 	github-release release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(DAILY) -d "version $(DAILY)"
 
 version:
-	github-release release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION) -d "version $(VERSION)"
+	github-release release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION) -d "version $(VERSION)"; sleep 2s
 
 del:
 	github-release delete -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION)
@@ -63,7 +63,7 @@ upload-darwin:
 	#github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumdarwin)" -n "$(packagename)-darwin" -f "$(packagename)-darwin"
 
 upload-linux:
-	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumlinux)" -n "$(packagename)" -f "$(packagename)"
+	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumlinux)" -n "$(packagename)" -f "$(packagename)-linux"
 
 release-android:
 	github-release release -p -s $(GITHUB_TOKEN) -u $(USER_GH) -r $(packagename) -t v$(VERSION)-$(testing) -d "version $(VERSION)"
@@ -74,6 +74,13 @@ upload-android:
 upload-plugins:
 	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbblinux)" -n "brb-linux.su3" -f "../brb-linux.su3"
 	github-release upload -R -u eyedeekay -r "$(packagename)" -t v$(VERSION) -l "$(sumbbwindows)" -n "brb-windows.su3" -f "../brb-windows.su3"
+
+download-su3s:
+	GOOS=windows make download-single-su3
+	GOOS=linux make download-single-su3
+
+download-single-su3:
+	wget-ds "https://github.com/$(USER_GH)/$(packagename)/releases/download/$(VERSION)/$(packagename)-$(GOOS).su3"
 
 upload: upload-windows upload-darwin upload-linux release-android upload-android upload-plugins
 
@@ -146,3 +153,4 @@ plugin:
 
 export sumbblinux=`sha256sum "../brb-linux.su3"`
 export sumbbwindows=`sha256sum "../brb-windows.su3"`
+
