@@ -80,7 +80,7 @@ download-su3s:
 	GOOS=linux make download-single-su3
 
 download-single-su3:
-	wget-ds "https://github.com/$(USER_GH)/$(packagename)/releases/download/$(VERSION)/$(packagename)-$(GOOS).su3"
+	wget-ds "https://github.com/$(USER_GH)/$(packagename)/releases/download/v$(VERSION)/$(packagename)-$(GOOS).su3"
 
 upload: upload-windows upload-darwin upload-linux upload-plugins
 
