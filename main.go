@@ -8,7 +8,6 @@ import (
 	"os"
 	"os/exec"
 	"os/signal"
-	"path/filepath"
 	"strings"
 	"time"
 
@@ -39,7 +38,7 @@ var home, _ = os.UserHomeDir()
 
 var (
 	host         = flag.String("host", "localhost", "Host of the i2pcontrol and SAM interfaces")
-	dir          = flag.String("dir", filepath.Join(home, "i2p/opt/native-traymenu"), "Path to the configuration directory")
+	dir          = flag.String("dir", "", "Path to the configuration directory(Default to application directory)")
 	shelp        = flag.Bool("h", false, "Show the help message")
 	lhelp        = flag.Bool("help", false, "Show the help message")
 	debug        = flag.Bool("d", false, "Debug mode")
