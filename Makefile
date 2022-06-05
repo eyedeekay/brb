@@ -46,7 +46,7 @@ osx: fmt
 	#GOOS=darwin go build $(GO_COMPILER_OPTS) -o $(packagename)-darwin
 
 linux: fmt
-	GOOS=linux go build $(GO_COMPILER_OPTS) -o $(packagename)
+	GOOS=linux go build $(GO_COMPILER_OPTS) -o $(packagename)-linux
 
 sumwindows=`sha256sum $(packagename)-windows.exe`
 sumlinux=`sha256sum $(packagename)`
@@ -120,25 +120,29 @@ plugin-linux: clean linux
 plugin-windows: clean windows-runner
 	GOOS=windows make plugin
 
+SIGNER_DIR=$(HOME)/i2p-go-keys/
+
 plugin:
-	i2p.plugin.native -name=brb-$(GOOS)
+	mkdir -p tmp; cp README.md tmp
+	i2p.plugin.native -name=brb-$(GOOS) \
 		-signer=hankhill19580@gmail.com \
+		-signer-dir=$(SIGNER_DIR) \
 		-version "$(VERSION)" \
 		-author=hankhill19580@gmail.com \
 		-autostart=true \
-		-clientname=brb-$(GOOS)
-		-consolename="BRB Chat" \
-		-consoleurl="http://127.0.0.1:7669" \
-		-command="brb -dir \$$PLUGIN/lib -eris=true -i2psite=true" \
+		-clientname=brb-$(GOOS) \
 		-consolename="BRB IRC" \
-		-delaystart="3" \
-		-icondata=icon/icon.png \
+		-consoleurl="http://127.0.0.1:7669" \
+		-name="brb-$(GOOS)" \
+		-delaystart="1" \
 		-desc="`cat ircdesc`" \
-		-exename=brb-$(GOOS)
+		-exename=brb-$(GOOS) \
+		-icondata=icon/icon.png \
+		-updateurl="http://idk.i2p/brb/brb-$(GOOS).su3" \
+		-website="http://idk.i2p/brb/" \
+		-command="brb-$(GOOS) -dir \$$PLUGIN/lib -eris=true -i2psite=true" \
 		-license=MIT \
-		-res="tmp/res/"
-	cp -v ../brb-$(GOOS).su3 .
-	unzip -o brb-$(GOOS).zip -d brb-$(GOOS)-zip
+		-res=tmp/
 
 export sumbblinux=`sha256sum "../brb-linux.su3"`
 export sumbbwindows=`sha256sum "../brb-windows.su3"`
