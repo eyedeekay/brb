@@ -47,6 +47,8 @@ In addition to that, it sets up:
   we connect to I2P to gather information about it's readiness in another
   webview.
 
+![BRB screenshot](screenshot.png)
+
 The result is a Modern-looking, no fuss Irc2P Client.
 
 Android Support
