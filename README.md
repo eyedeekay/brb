@@ -51,6 +51,17 @@ In addition to that, it sets up:
 
 The result is a Modern-looking, no fuss Irc2P Client.
 
+I2P Plugin
+----------
+
+This was the first "`ShellService`" type plugin for I2P, a type of plugin which
+runs an external, usually non-Java application as an I2P managed plugin. This allows
+it to be correlated to the lifecycle of the I2P router that hosts it and is the
+recommended way to install `BRB`.
+
+ - [Windows Plugin](http://idk.i2p/brb/brb-windows.su3) for Windows/x64 PC's
+ - [Linux Plugin](http://idk.i2p/brb/brb-linux.su3) for Linux/x64 PC's
+
 Android Support
 ---------------
 
