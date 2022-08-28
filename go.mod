@@ -16,5 +16,4 @@ require (
 )
 
 replace github.com/willf/bitset => github.com/bits-and-blooms/bitset v1.1.10
-
 replace github.com/caddyserver/certmagic => github.com/caddyserver/certmagic v0.11.2

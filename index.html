@@ -1,110 +1,330 @@
-<!DOCTYPE html>
 <html>
-<head>
-  <title>BRB, IRC Client, Self-Hosted Anonymous Groupchat</title>
-  <link rel="stylesheet" type="text/css" href ="home.css" />
-</head>
-<body>
-<h1>brb</h1>
+  <head>
+    <title>
+      brb
+    </title>
+    <meta name="author" content="eyedeekay" />
+    <meta name="description" content="brb" />
+    <meta name="keywords" content="main" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="showhider.css" />
+  </head>
+  <body>
+    <div id="navbar">
+      <a href="#shownav">
+        Show navigation
+      </a>
+      <div id="shownav">
+        <div id="hidenav">
+          <ul>
+            <li>
+              <a href="index.html">
+                index
+              </a>
+            </li>
+            <li>
+              <a href="LICENSE.html">
+                LICENSE
+              </a>
+            </li>
+          </ul>
+          <br>
+          <a href="#hidenav">
+            Hide Navigation
+          </a>
+        </div>
+      </div>
+    </div>
+    <h1>
+      <a href="#brb" rel="nofollow">
+        <span></span>
+      </a>
+      brb
+    </h1>
+    <p>
+      <em>
+        A pseudonymous software for groupchat based on IRC.
+      </em>
+    </p>
+    <p>
+      <strong>
+        BRB incoroporates:
+      </strong>
+    </p>
+    <p>
+      An IRC Client - The actual IRC client is
+      <em>
+        <a href="https://github.com/khlieng/dispatch" rel="nofollow">
+          khlieng/dispatch
+        </a>
+      </em>
+      and they deserve most of the credit! All I did was add I2P support to
+      their application, then wrap it up in the interface I happen to think
+      was the most logical. In it&#39;s most basic use-case, it&#39;s an easy-to-use
+      modern client to the Irc2P network or any in-I2P IRC server.
+    </p>
+    <p>
+      Dispatch is the reason I call the client &#34;Blue Rubber Band,&#34; because print newspapers
+      are often called &#34;Dispatches&#34; and in the US are frequently &#34;Bound&#34; in thin blue rubber
+      bands.
+    </p>
+    <p>
+      BRB also wraps up an IRC server, using
+      <em>
+        <a href="https://i2pgit.org/idk/terrarium" rel="nofollow">
+          terrarium
+        </a>
+      </em>
+      ,
+      a spin-off of another IRC server called
+      <em>
+        <a href="https://github.com/horgh/catbox" rel="nofollow">
+          horgh/catbox
+        </a>
+      </em>
+      ,
+      which I picked because it had relatively few features and a simple, self-contained
+      implementation. In older versions it used an IRC server called
+      <em>
+        <a href="https://git.mills.io/prologic/eris" rel="nofollow">
+          prologic/eris
+        </a>
+      </em>
+      which also has easy-to-setup I2P support.
+    </p>
+    <p>
+      Lastly, using
+      <a href="https://github.com/eyedeekay/sam-forwarder" rel="nofollow">
+        eyedeekay/sam-forwarder
+      </a>
+      ,
+      the WebIRC interface provided by
+      <em>
+        Dispatch
+      </em>
+      is then forwarded back to the I2P network
+      as an I2P Site. In this way, anyone who connects to your Dispatch interface over I2P
+      can chat with you or others without the conversation leaving the server hosting the
+      <em>
+        Dispatch/Terrarium
+      </em>
+      combination instance. When used in this way, it could act as an
+      anonymous replacement for something like Slack or Discord.
+    </p>
+    <p>
+      In addition to that, it sets up:
+    </p>
+    <p>
+      <img src="screenshot.png" alt="BRB screenshot">
+    </p>
+    <ol>
+      <li>
+        <strong>
+          A taskbar icon:
+        </strong>
+        using the
+        <a href="https://github.com/getlantern/systray" rel="nofollow">
+          getlantern/systray
+        </a>
+        library and an accompanying menu, which can be used to launch the IRC client interface.
+      </li>
+      <li>
+        <strong>
+          A menu
+        </strong>
+        clicking the taskbar icon will open the menu, which presents
+        options for launching the webview, connecting the webview to either I2PRC
+        or your own private IRC server provided by the local Eris instance, and
+        a panel to check the health of your I2P router.
+      </li>
+      <li>
+        <strong>
+          A Webview:
+        </strong>
+        using the
+        <a href="https://github.com/webview/webview" rel="nofollow">
+          webview/webview
+        </a>
+        library. It&#39;s configured to proxy all traffic to I2P via the default
+        HTTP proxy,
+        <em>
+          except
+        </em>
+        for traffic which is destined for the dispatch
+        IRC client. This makes it capable of browsing I2P sites. It is
+        <strong>
+          not reccommended
+        </strong>
+        that you use this feature for general I2P browsing,
+        but it should be ok for opening links from parties
+        <strong>
+          who you trust
+        </strong>
+        to
+        give you the link.
+      </li>
+      <li>
+        <strong>
+          An I2P Diagnostic View:
+        </strong>
+        using the
+        <a href="https://geti2p.net/en/docs/api/i2pcontrol" rel="nofollow">
+          I2PControl API
+        </a>
+        we connect to I2P to gather information about it&#39;s readiness in another
+        webview.
+      </li>
+    </ol>
+    <p>
+      The result is a Modern-looking, no fuss Irc2P Client.
+    </p>
+    <h2>
+      <a href="#i2p-plugin" rel="nofollow">
+        <span></span>
+      </a>
+      I2P Plugin
+    </h2>
+    <p>
+      This was the first &#34;
+      <code>
+        ShellService
+      </code>
+      &#34; type plugin for I2P, a type of plugin which
+      runs an external, usually non-Java application as an I2P managed plugin. This allows
+      it to be correlated to the lifecycle of the I2P router that hosts it and is the
+      recommended way to install
+      <code>
+        BRB
+      </code>
+      .
+    </p>
+    <ul>
+      <li>
+        <a href="http://idk.i2p/brb/brb-windows.su3" rel="nofollow">
+          Windows Plugin
+        </a>
+        for Windows/x64 PC&#39;s
+      </li>
+      <li>
+        <a href="http://idk.i2p/brb/brb-linux.su3" rel="nofollow">
+          Linux Plugin
+        </a>
+        for Linux/x64 PC&#39;s
+      </li>
+    </ul>
+    <h2>
+      <a href="#android-support" rel="nofollow">
+        <span></span>
+      </a>
+      Android Support
+    </h2>
+    <p>
+      brb is also available experimentally for Android. In this case, the webview
+      parts are provided by the corresponding Android APIs. The final goal of the
+      Android application is to implement all the same features as the Desktop
+      application, including the Eris server. In this case, instead of a
+      <strong>
+        taskbar icon
+      </strong>
+      and a
+      <strong>
+        menu
+      </strong>
+      BRB provides:
+    </p>
+    <ol>
+      <li>
+        <strong>
+          A Foreground Service:
+        </strong>
+        The Go parts of BRB are adapted to be &#34;runnable&#34;
+        and controlled by a Foreground Service. This makes BRB &#34;Work&#34; on Android,
+        but it doesn&#39;t have a menu to expose any of it&#39;s features.
+      </li>
+      <li>
+        <strong>
+          A NotificationArea with a tray menu:
+        </strong>
+        To set up the means to launch into
+        various parts of the BRB app, a NotificationArea is added(persistently) into
+        the toolbar at the top of your Android device&#39;s UI. It has the same buttons as
+        the Menu on the desktop.
+      </li>
+    </ol>
+    <h2>
+      <a href="#enable-the-sam-api" rel="nofollow">
+        <span></span>
+      </a>
+      Enable the SAM API!
+    </h2>
+    <p>
+      brb uses the SAM API to set up it&#39;s connection to IRC networks inside of I2P.
+      This means that it can support as many IRC networks as you want to connect to.
+      With i2pd, the SAM API is already enabled. With Java I2P, you must enable it
+      on the
+      <a href="http://localhost:7657/configclients" rel="nofollow">
+        Config Clients
+      </a>
+      page.
+    </p>
+    <blockquote>
+      <blockquote>
+        <p>
+          <code>
+            If you do not want to use either the WebView or Chromium to wrap the
+            user-interface, you can instead use any web browser and direct it to
+            localhost:7669. There is a container tab for this in
+            [I2P in Private Browsing](https://github.com/eyedeekay/I2P-in-Private-Browsing-Mode-Firefox).
+            This should be a reasonable baseline for non-sensitive I2P browsing.
+          </code>
+        </p>
+      </blockquote>
+    </blockquote>
+    <div>
+      <a href="#show">
+        Show license
+      </a>
+      <div id="show">
+        <div id="hide">
+          <pre><code>This is free and unencumbered software released into the public domain.
 
-<p><em>A pseudonymous software for groupchat based on IRC.</em></p>
+Anyone is free to copy, modify, publish, use, compile, sell, or
+distribute this software, either in source code form or as a compiled
+binary, for any purpose, commercial or non-commercial, and by any
+means.
 
-<p><strong>BRB incoroporates:</strong></p>
+In jurisdictions that recognize copyright laws, the author or authors
+of this software dedicate any and all copyright interest in the
+software to the public domain. We make this dedication for the benefit
+of the public at large and to the detriment of our heirs and
+successors. We intend this dedication to be an overt act of
+relinquishment in perpetuity of all present and future rights to this
+software under copyright law.
 
-<p>An IRC Client - The actual IRC client is <em><a href="https://github.com/khlieng/dispatch">khlieng/dispatch</a></em>
-and they deserve most of the credit! All I did was add I2P support to
-their application, then wrap it up in the interface I happen to think
-was the most logical. In it's most basic use-case, it's an easy-to-use
-modern client to the Irc2P network or any in-I2P IRC server.</p>
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
 
-<p>Dispatch is the reason I call the client "Blue Rubber Band," because print newspapers
-are often called "Dispatches" and in the US are frequently "Bound" in thin blue rubber
-bands.</p>
-
-<p>BRB also wraps up an IRC server, using <em><a href="https://i2pgit.org/idk/terrarium">terrarium</a></em>,
-a spin-off of another IRC server called <em><a href="https://github.com/horgh/catbox">horgh/catbox</a></em>,
-which I picked because it had relatively few features and a simple, self-contained
-implementation. In older versions it used an IRC server called <em><a href="https://git.mills.io/prologic/eris">prologic/eris</a></em>
-which also has easy-to-setup I2P support.</p>
-
-<p>Lastly, using <a href="https://github.com/eyedeekay/sam-forwarder">eyedeekay/sam-forwarder</a>,
-the WebIRC interface provided by <em>Dispatch</em> is then forwarded back to the I2P network
-as an I2P Site. In this way, anyone who connects to your Dispatch interface over I2P
-can chat with you or others without the conversation leaving the server hosting the
-<em>Dispatch/Terrarium</em> combination instance. When used in this way, it could act as an
-anonymous replacement for something like Slack or Discord.</p>
-
-<p>In addition to that, it sets up:</p>
-
-<p><img src="screenshot.png" alt="BRB screenshot" title="" /></p>
-
-<ol>
-<li><strong>A taskbar icon:</strong> using the <a href="https://github.com/getlantern/systray">getlantern/systray</a>
-library and an accompanying menu, which can be used to launch the IRC client interface.</li>
-<li><strong>A menu</strong> clicking the taskbar icon will open the menu, which presents
-options for launching the webview, connecting the webview to either I2PRC
-or your own private IRC server provided by the local Eris instance, and
-a panel to check the health of your I2P router.</li>
-<li><strong>A Webview:</strong> using the <a href="https://github.com/webview/webview">webview/webview</a>
-library. It's configured to proxy all traffic to I2P via the default
-HTTP proxy, <em>except</em> for traffic which is destined for the dispatch
-IRC client. This makes it capable of browsing I2P sites. It is
-<strong>not reccommended</strong> that you use this feature for general I2P browsing,
-but it should be ok for opening links from parties <strong>who you trust</strong> to
-give you the link.</li>
-<li><strong>An I2P Diagnostic View:</strong> using the <a href="https://geti2p.net/en/docs/api/i2pcontrol">I2PControl API</a>
-we connect to I2P to gather information about it's readiness in another
-webview.</li>
-</ol>
-
-<p>The result is a Modern-looking, no fuss Irc2P Client.</p>
-
-<h2>I2P Plugin</h2>
-
-<p>This was the first "<code>ShellService</code>" type plugin for I2P, a type of plugin which
-runs an external, usually non-Java application as an I2P managed plugin. This allows
-it to be correlated to the lifecycle of the I2P router that hosts it and is the
-recommended way to install <code>BRB</code>.</p>
-
-<ul>
-<li><a href="http://idk.i2p/brb/brb-windows.su3">Windows Plugin</a> for Windows/x64 PC's</li>
-<li><a href="http://idk.i2p/brb/brb-linux.su3">Linux Plugin</a> for Linux/x64 PC's</li>
-</ul>
-
-<h2>Android Support</h2>
-
-<p>brb is also available experimentally for Android. In this case, the webview
-parts are provided by the corresponding Android APIs. The final goal of the
-Android application is to implement all the same features as the Desktop
-application, including the Eris server. In this case, instead of a 
-<strong>taskbar icon</strong> and a <strong>menu</strong> BRB provides:</p>
-
-<ol>
-<li><strong>A Foreground Service:</strong> The Go parts of BRB are adapted to be "runnable"
-and controlled by a Foreground Service. This makes BRB "Work" on Android,
-but it doesn't have a menu to expose any of it's features.</li>
-<li><strong>A NotificationArea with a tray menu:</strong> To set up the means to launch into
-various parts of the BRB app, a NotificationArea is added(persistently) into
-the toolbar at the top of your Android device's UI. It has the same buttons as
-the Menu on the desktop.</li>
-</ol>
-
-<h2>Enable the SAM API!</h2>
-
-<p>brb uses the SAM API to set up it's connection to IRC networks inside of I2P.
-This means that it can support as many IRC networks as you want to connect to.
-With i2pd, the SAM API is already enabled. With Java I2P, you must enable it
-on the <a href="http://localhost:7657/configclients">Config Clients</a> page.</p>
-
-<blockquote>
-  <blockquote>
-  <p><code>If you do not want to use either the WebView or Chromium to wrap the
-  user-interface, you can instead use any web browser and direct it to
-  localhost:7669. There is a container tab for this in
-  [I2P in Private Browsing](https://github.com/eyedeekay/I2P-in-Private-Browsing-Mode-Firefox).
-  This should be a reasonable baseline for non-sensitive I2P browsing.</code></p>
-</blockquote>
-
-<p></blockquote></p>
-</body>
+For more information, please refer to <https://unlicense.org>
+</code></pre>
+          <a href="#hide">
+            Hide license
+          </a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <iframe src="https://snowflake.torproject.org/embed.html" width="320" height="240" frameborder="0" scrolling="no"></iframe>
+    </div>
+    <div>
+      <a href="https://geti2p.net/">
+        <img src="i2plogo.png"></img>
+        I2P
+      </a>
+    </div>
+  </body>
 </html>
