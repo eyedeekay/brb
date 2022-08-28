@@ -3,7 +3,7 @@ brb
 
 *A pseudonymous software for groupchat based on IRC.*
 
-
+STATUS: This project is maintained. I will respond to issues, pull requests, and feature requests within a few days. I am primarily fixing bugs. 
 
 **BRB incoroporates:**
 
